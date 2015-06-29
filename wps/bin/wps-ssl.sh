@@ -4,9 +4,10 @@
 
 wps_ssl() {
 
+	wps_header "SSL Setup"
+
 	if [[  ! -f $home/ssl/${HOSTNAME}.crt  ]]; then
 
-		wps_header "SSL Setup"
 	
 		cd $home/ssl && rm -f $home/ssl/$HOSTNAME.*
 		
@@ -18,5 +19,6 @@ wps_ssl() {
 	
 		rm -f openssl.conf
 
+	else echo -e "WARN: Certificates already exists.\nSkipping..."
 	fi
 }
