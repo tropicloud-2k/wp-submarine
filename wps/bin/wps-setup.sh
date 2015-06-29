@@ -27,7 +27,10 @@ wps_setup() {
 # MYSQL
 # ---------------------------------------------------------------------------------
 	
-	if [[  -z $MYSQL_PORT  ]]; then wps_mysql_setup; else wps_mysql_link; fi
+	if [[  -z $MYSQL_PORT  ]];
+	then wps_mysql_setup
+	else wps_mysql_link
+	fi
 	
 	
 # MSMTP
@@ -53,7 +56,7 @@ wps_setup() {
 	
 	wps_header "WordPress Setup"
 	
-	su -l $user -c "git clone $WP_REPO wps" && wps_version
+	su -l $user -c "git clone $WP_REPO $www" && wps_version
 	su -l $user -c "cd $www && composer install"
 
 	wps_wp_install > $home/log/wps-wordpress.log 2>&1 & 			
