@@ -2,7 +2,7 @@
 # START
 # ---------------------------------------------------------------------------------
 
-wps_start() { wps_check; wps_header "Start"; wps_links && echo ""
+wps_start() { wps_check; wps_header "Start"; wps_links && echo ''
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
@@ -28,7 +28,8 @@ wps_stop() { wps_header "Stop"
 		else /usr/bin/supervisorctl -u $HOSTNAME -p $WPM_ENV_HTTP_PASS stop $2
 		fi
 	
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -45,7 +46,8 @@ wps_restart() { wps_header "Restart"
 		fi
 		
 	else exec /usr/bin/supervisord -n -c /etc/supervisord.conf
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -56,7 +58,8 @@ wps_reload() { wps_header "Reload"
 
 	if [[  -f /tmp/supervisord.pid  ]];
 	then /usr/bin/supervisorctl -u $HOSTNAME -p $WPM_ENV_HTTP_PASS reload
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -67,7 +70,8 @@ wps_shutdown() { wps_header "Shutdown"
 
 	if [[  -f /tmp/supervisord.pid  ]];
 	then /usr/bin/supervisorctl -u $HOSTNAME -p $WPM_ENV_HTTP_PASS shutdown
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -83,7 +87,8 @@ wps_status() { wps_header "Status"
 		else /usr/bin/supervisorctl -u $HOSTNAME -p $WPM_ENV_HTTP_PASS status $2
 		fi
 	
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -94,7 +99,8 @@ wps_log() { wps_header "Log"
 	
 	if [[  -f /tmp/supervisord.pid  ]];
 	then /usr/bin/supervisorctl -u $HOSTNAME -p $WPM_ENV_HTTP_PASS maintail
-	fi; echo ""
+	fi
+	echo ''
 }
 
 
@@ -104,7 +110,7 @@ wps_log() { wps_header "Log"
 wps_ps() { wps_header "Container Processes"
 
 	ps auxf
-	echo ""
+	echo ''
 }
 
 

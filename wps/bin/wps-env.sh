@@ -40,9 +40,12 @@ wps_env() {
 # DUMP
 # ---------------------------------------------------------------------------------
 
-	echo "" > /etc/.env && env | grep = >> /etc/.env
+	echo "" > /etc/.env
+	env | grep = >> /etc/.env
 	
-	for var in `cat /etc/.env`; do echo $var >> $www/.env; done	
+	for var in `cat /etc/.env`; do 
+		echo $var >> $www/.env
+	done	
 
 
 # SUPERVISOR
