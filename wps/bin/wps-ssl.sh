@@ -19,6 +19,6 @@ wps_ssl() {
 	
 		rm -f openssl.conf
 
-	else echo -e "WARN: Certificates already exists.\nSkipping..."
+	else echo -e "Certificate already exists.\nSkipping..."
 	fi
 }
