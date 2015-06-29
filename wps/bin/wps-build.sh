@@ -1,5 +1,5 @@
 
-wps_build() { wps_header "Build"
+wps_build() { wps_header "Building image"
 
 
 # PACKGES

@@ -32,6 +32,7 @@ wps_env() {
 
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPM_ENV_HTTP_PASS" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPM_ENV_HTTP_PASS`\n" > $home/.htpasswd
+
 	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
 	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
