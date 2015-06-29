@@ -57,10 +57,10 @@ wps_links() {
 
 wps_version(){
 
-	WP_VER=`cat $www/composer.json | grep 'johnpbloch/wordpress' | cut -d: -f2`
+	LOCK_VERSION=`cat $www/composer.json | grep 'johnpbloch/wordpress' | cut -d: -f2`
 	
 	if [[  ! -z $WP_VERSION  ]];
-	then sed -i "s/$WP_VER/\"$WP_VERSION\"/g" $www/composer.json && su -l $user -c "cd $www && composer update"
+	then sed -i "s/$LOCK_VERSION/\"$WP_VERSION\"/g" $www/composer.json && su -l $user -c "cd $www && composer update"
 	fi
 }
 
@@ -83,6 +83,6 @@ wps_adminer() {
 
 	wps_header "Adminer (mysql admin)"
 
-	echo -e "  Password: $WPM_ENV_HTTP_PASS\n"
+	echo -e "  Database password: $DB_PASSWORD\n"
 	php -S 0.0.0.0:8080 -t /usr/local/adminer
 }

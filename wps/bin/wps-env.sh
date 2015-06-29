@@ -18,7 +18,7 @@ wps_env() {
 	fi
 	
 	export WP_SITEURL="${WP_HOME}/wp"
-	export WPM_ENV_HTTP_PASS="`openssl rand 12 -hex`"
+	export WPS_PASSWORD="`openssl rand 12 -hex`"
 	export AUTH_KEY="`openssl rand 48 -base64`"
 	export SECURE_AUTH_KEY="`openssl rand 48 -base64`"
 	export LOGGED_IN_KEY="`openssl rand 48 -base64`"
@@ -30,8 +30,8 @@ wps_env() {
 	export HOME="/home/wordpress"
 	export VISUAL="nano"
 
-# 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPM_ENV_HTTP_PASS" | sha1sum | awk '{print $1}'`"
-# 	echo -e "$user:`openssl passwd -crypt $WPM_ENV_HTTP_PASS`\n" > $home/.htpasswd
+# 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
+# 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
 	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
 	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
@@ -53,7 +53,7 @@ wps_env() {
 	
 	cat /wps/etc/supervisord.conf \
 	| sed -e "s/example.com/$HOSTNAME/g" \
-	| sed -e "s/WPM_ENV_HTTP_PASS/{SHA}$WPM_ENV_HTTP_SHA1/g" \
+	| sed -e "s/WPS_PASSWORD/{SHA}$WPM_ENV_HTTP_SHA1/g" \
 	> /etc/supervisord.conf && chmod 644 /etc/supervisord.conf
 
 
