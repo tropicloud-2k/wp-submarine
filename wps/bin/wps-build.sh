@@ -71,7 +71,7 @@ wps_build() { wps_header "Building image"
 # ---------------------------------------------------------------------------------
 	
 	chmod +x /wps/wps.sh && ln -s /wps/wps.sh /usr/bin/wps
-	adduser -D -G nginx -s /bin/sh -h $home $user
+	adduser -D -G nginx -s /bin/sh -u 1001 -h $home $user
 	
 	mkdir -p $home/conf.d
 	mkdir -p $home/init.d

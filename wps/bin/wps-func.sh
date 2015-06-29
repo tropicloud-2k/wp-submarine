@@ -4,9 +4,15 @@
 
 wps_check() {
 	case "$HOSTNAME" in
-		*.*) wps_setup;;
+		*.*) wps_true;;
 		*) wps_false;;
 	esac
+}
+
+wps_true() {
+	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
+	if [[  -z $MYSQL && -z $DB_HOST  ]]; then wps_mysql_setup; fi	
+	if [[  -d $www  ]]; then /bin/true; else wps_setup; fi
 }
 
 wps_false() {
@@ -35,18 +41,18 @@ wps_header() {
 
 wps_links() {
 
-	if [[  ! -z $MYSQL_PORT  ]];
-	then echo -e "\033[1;32m  •\033[0;37m MySQL\033[0m --> `echo $MYSQL_PORT | cut -d/ -f3 | cut -d: -f1`"
+	if [[  -n $MYSQL  ]];
+	then echo -e "\033[1;32m  •\033[0;37m MySQL\033[0m --> `echo $MYSQL`"
 	else echo -e "\033[1;31m  •\033[0;37m MySQL\033[0m (not linked)"
 	fi	
 
-	if [[  ! -z $REDIS_PORT  ]];
-	then echo -e "\033[1;32m  •\033[0;37m Redis\033[0m --> `echo $REDIS_PORT | cut -d/ -f3 | cut -d: -f1`"		
+	if [[  -n $REDIS  ]];
+	then echo -e "\033[1;32m  •\033[0;37m Redis\033[0m --> `echo $REDIS`"		
 	else echo -e "\033[1;31m  •\033[0;37m Redis\033[0m (not linked)"
 	fi		
 
-	if [[  ! -z $MEMCACHED_PORT  ]];
-	then echo -e "\033[1;32m  •\033[0;37m Memcached\033[0m --> `echo $MEMCACHED_PORT | cut -d/ -f3 | cut -d: -f1`"
+	if [[  -n $MEMCACHED  ]];
+	then echo -e "\033[1;32m  •\033[0;37m Memcached\033[0m --> `echo $MEMCACHED`"
 	else echo -e "\033[1;31m  •\033[0;37m Memcached\033[0m (not linked)"
 	fi
 }
@@ -70,7 +76,8 @@ wps_version(){
 
 wps_chmod() { 
 
-	chown -LR $user:nginx $home
+	chown -R $user:nginx $home
+	chmod -R 755 $home
 
 	find $home -type f -exec chmod 644 {} \;
 	find $home -type d -exec chmod 755 {} \;
@@ -83,6 +90,6 @@ wps_adminer() {
 
 	wps_header "Adminer (mysql admin)"
 
-	echo -e "  Database password: $DB_PASSWORD\n"
+	echo -e "  Password: $DB_PASSWORD\n"
 	php -S 0.0.0.0:8080 -t /usr/local/adminer
 }

@@ -1,8 +1,10 @@
 
 wps_setup() {
 
-# NGINX
-# ---------------------------------------------------------------------------------
+	if [[  -f /etc/.env  ]]; then cat /etc/.env > $home/.env; else wps_env; fi
+		
+	# NGINX
+	# ---------------------------------------------------------------------------------
 
 	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
 	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > /etc/nginx/nginx.conf
@@ -11,10 +13,9 @@ wps_setup() {
 	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf && wps_ssl
 	else cat /wps/etc/nginx/wp.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
 	fi
-	
 
-# PHP
-# ---------------------------------------------------------------------------------
+	# PHP-FPM
+	# ---------------------------------------------------------------------------------
 	
 	cat /wps/etc/init.d/php-fpm.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/php-fpm.ini
 
@@ -23,27 +24,16 @@ wps_setup() {
 	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
 	fi
 
-
-# MYSQL
-# ---------------------------------------------------------------------------------
-	
-	if [[  -z $MYSQL_PORT  ]];
-	then wps_mysql_setup
-	else wps_mysql_link
-	fi
-	
-	
-# MSMTP
-# ---------------------------------------------------------------------------------
+	# MSMTP
+	# ---------------------------------------------------------------------------------
 
 	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
 	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
 	touch /var/log/msmtp.log
 	chmod 777 /var/log/msmtp.log
-
-
-# WORDPRESS
-# ---------------------------------------------------------------------------------
+	
+	# WORDPRESS
+	# ---------------------------------------------------------------------------------
 	
 	wps_header "WordPress Setup"
 	

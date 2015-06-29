@@ -11,7 +11,6 @@ wps_core_install() {
 
 wps_wp_install() {
 
-	wps_env
 	cd $web
 	
 	if [[  ! -z "$WP_TITLE" && ! -z "$WP_USER" && ! -z "$WP_MAIL" && ! -z "$WP_PASS"  ]]; then 
@@ -22,7 +21,7 @@ wps_wp_install() {
 		else wps_core_install
 		fi
 	fi
-	echo -e "$(date +%Y-%m-%d\ %T) WordPress setup completed" >> $home/log/wps-install.log
+	echo -e "$(date +%Y-%m-%d\ %T) wordpress setup completed." >> $home/log/wps-install.log
 }
 
 
@@ -31,7 +30,7 @@ wps_wp_install() {
 
 wps_wp_plugins() {
 
-	if [[  ! -z $MEMCACHED_PORT  ]]; then
+	if [[  -n $MEMCACHED  ]]; then
 		wp plugin install wp-ffpc --activate
 		sed -i "s/127.0.0.1:11211/$MEMCACHED/g" $home/conf.d/nginx.conf		
 		curl -sL https://raw.githubusercontent.com/petermolnar/wp-ffpc/master/wp-ffpc.php \
@@ -44,10 +43,10 @@ wps_wp_plugins() {
 		echo "define('WP_CACHE', true);" >> $www/config/environments/production.php
 	fi
 	
-	if [[  ! -z $REDIS_PORT  ]]; then
+	if [[  -n $REDIS  ]]; then
 		wp plugin install redis-cache --activate
 		sed -i "s/127.0.0.1:11211/$REDIS/g" $home/conf.d/nginx.conf
-		echo "define('WP_REDIS_HOST', getenv('REDIS_PORT_6379_TCP_ADDR'));" >> $www/config/environments/production.php
-		echo "define('WP_REDIS_PORT', getenv('REDIS_PORT_6379_TCP_PORT'));" >> $www/config/environments/production.php
+		echo "define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));" >> $www/config/environments/production.php
+		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
 }
