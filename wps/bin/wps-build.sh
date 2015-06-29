@@ -82,6 +82,6 @@ wps_build() { wps_header "Build"
 	cat /wps/etc/.profile > /root/.profile
 	cat /wps/etc/.profile > $home/.profile
 		
-	wps_header "Build completed"
+	wps_header "Done!"
 }
 
