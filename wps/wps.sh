@@ -1,19 +1,23 @@
 #!/bin/sh
 
-# WP SUBMARINE
+# WP-SUBMARINE
 # ---------------------------------------------------------------------------------
 # @author: admin@tropicloud.net
 # version: 0.1
 # ---------------------------------------------------------------------------------
 
 
-# PATHS
+# ENVIRONMENT
 # ---------------------------------------------------------------------------------
 
 export user="wordpress"
 export home="/home/$user"
 export www="$home/www"
 export web="$www/web"
+
+if [[  -f /etc/.env  ]]; then
+	. /etc/.env 
+fi
 
 
 # FUNCTIONS
