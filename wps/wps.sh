@@ -10,10 +10,10 @@
 # PATHS
 # ---------------------------------------------------------------------------------
 
-export user="wordpress"
-export home="/home/$user"
-export www="$home/www"
-export web="$www/web"
+user="wordpress"
+home="/home/$user"
+www="$home/www"
+web="$www/web"
 
 
 # FUNCTIONS
