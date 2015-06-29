@@ -42,15 +42,6 @@ wps_setup() {
 	chmod 777 /var/log/msmtp.log
 
 
-# SUPERVISOR
-# ---------------------------------------------------------------------------------
-	
-	cat /wps/etc/supervisord.conf \
-	| sed -e "s/example.com/$HOSTNAME/g" \
-	| sed -e "s/WPM_ENV_HTTP_PASS/{SHA}$WPM_ENV_HTTP_SHA1/g" \
-	> /etc/supervisord.conf && chmod 644 /etc/supervisord.conf
-
-
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 	

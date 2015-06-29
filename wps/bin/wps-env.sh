@@ -43,6 +43,18 @@ wps_env() {
 	echo "" > /etc/.env && env | grep = >> /etc/.env
 	
 	for var in `cat /etc/.env`; do echo $var >> $www/.env; done	
+
+
+# SUPERVISOR
+# ---------------------------------------------------------------------------------
 	
+	cat /wps/etc/supervisord.conf \
+	| sed -e "s/example.com/$HOSTNAME/g" \
+	| sed -e "s/WPM_ENV_HTTP_PASS/{SHA}$WPM_ENV_HTTP_SHA1/g" \
+	> /etc/supervisord.conf && chmod 644 /etc/supervisord.conf
+
+
+# ---------------------------------------------------------------------------------
+
 	echo -e "$(date +%Y-%m-%d\ %T) Environment setup completed" >> $home/log/wps-install.log
 }
