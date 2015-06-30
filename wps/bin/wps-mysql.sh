@@ -55,5 +55,7 @@ wps_mysql_setup() {
 	
 	mysqladmin -u root shutdown
 	
-	echo -e "$(date +%Y-%m-%d\ %T) mysql setup completed." >> $home/log/wps-install.log	
+	# -----------------------------------------------------------------------------	
+
+	echo -e "`date +%Y-%m-%d\ %T` MySQL setup completed." >> $home/log/wps/install.log	
 }

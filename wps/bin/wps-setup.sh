@@ -36,7 +36,7 @@ wps_setup() {
 	cat /wps/etc/supervisord.conf \
 	| sed -e "s/example.com/$HOSTNAME/g" \
 	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
-	> /home/wordpress/conf.d/supervisord.conf
+	> $SUPERVISORD_CONF
 
 	# WORDPRESS
 	# ---------------------------------------------------------------------------------
@@ -46,13 +46,16 @@ wps_setup() {
 	su -l $user -c "git clone $WP_REPO $www" && wps_version
 	su -l $user -c "cd $www && composer install"
 
-	wps_wp_install > $home/log/wps-wordpress.log 2>&1 & 			
-	wps_wp_status() { cat $home/log/wps-install.log | grep -q "wordpress setup completed"; }
+	wps_wp_install > $home/log/wps/wp-install.log 2>&1 & 			
 		
 	echo -ne "Installing WordPress..."
+	wps_wp_status() { cat $home/log/wps/wp-install.log | grep -q 'WordPress installed successfully'; }
 	while ! wps_wp_status true; do echo -n '.'; sleep 1; done; echo -ne " done.\n"
 	
+	# -----------------------------------------------------------------------------	
+
 	# hide "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
 	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 
+	echo -e "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/log/wps/install.log	
 }

@@ -21,4 +21,8 @@ wps_ssl() {
 
 	else echo -e "Certificate already exists.\nSkipping..."
 	fi
+
+	# -----------------------------------------------------------------------------	
+
+	echo -e "`date +%Y-%m-%d\ %T` SSL setup completed." >> $home/log/wps/install.log	
 }

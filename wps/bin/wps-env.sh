@@ -85,5 +85,5 @@ wps_env() {
 
 	# -----------------------------------------------------------------------------	
 
-	wps_header "`date +%Y-%m-%d\ %T` environment setup completed." >> $home/log/wps-install.log
+	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/log/wps/install.log
 }

@@ -21,8 +21,6 @@ wps_wp_install() {
 		else wps_core_install
 		fi
 	fi
-
-	echo -e "$(date +%Y-%m-%d\ %T) wordpress setup completed." >> $home/log/wps-install.log
 }
 
 
