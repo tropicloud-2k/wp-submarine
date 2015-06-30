@@ -5,11 +5,11 @@ wps_setup() {
 	# ---------------------------------------------------------------------------------
 
 	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
-	cat /wps/etc/nginx/nginx_new.conf | sed -e "s/example.com/$HOSTNAME/g" > /etc/nginx/nginx.conf
+	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
 	
 	if [[  $WP_SSL == 'true'  ]];
-	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf && wps_ssl
-	else cat /wps/etc/nginx/wp.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
+	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl
+	else cat /wps/etc/nginx/wp.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf
 	fi
 
 	# PHP-FPM

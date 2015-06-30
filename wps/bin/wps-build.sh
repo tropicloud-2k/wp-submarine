@@ -33,7 +33,7 @@ wps_build() { wps_header "Building image"
 		php-zip \
 		supervisor \
 		libmemcached \
-		curl git nano
+		bash curl git nano sudo
 	                 
 	rm -rf /var/cache/apk/*
 	rm -rf /var/lib/apt/lists/*
@@ -72,17 +72,18 @@ wps_build() { wps_header "Building image"
 	
 	chmod +x /wps/wps.sh && ln -s /wps/wps.sh /usr/bin/wps
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
+	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 	
 	mkdir -p $home/conf.d
 	mkdir -p $home/init.d
 	mkdir -p $home/log/nginx
 	mkdir -p $home/log/php
-	mkdir -p $home/tmp/nginx
+# 	mkdir -p $home/tmp/nginx
 	mkdir -p $home/ssl
 	
 	cat /wps/etc/.profile > /root/.profile
 	cat /wps/etc/.profile > $home/.profile
 		
-	wps_header "Done!"
+	wps_header "Build completed"
 }
 
