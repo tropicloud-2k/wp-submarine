@@ -31,8 +31,8 @@ wps_env() {
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
-			then echo DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && wps_mysql_create
-			else echo DB_NAME=$MYSQL_ENV_MYSQL_PASSWORD
+			then export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && wps_mysql_create
+			else export DB_NAME=$MYSQL_ENV_MYSQL_PASSWORD
 			fi						
 		fi
 	fi
