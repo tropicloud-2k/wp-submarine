@@ -1,7 +1,5 @@
 
 wps_setup() {
-
-	if [[  -f /etc/.env  ]]; then cat /etc/.env > $home/.env; else wps_env; fi
 		
 	# NGINX
 	# ---------------------------------------------------------------------------------

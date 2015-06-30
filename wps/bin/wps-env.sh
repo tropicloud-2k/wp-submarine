@@ -4,38 +4,54 @@ wps_env() {
 # MYSQL 
 # ---------------------------------------------------------------------------------
 
-	if [[  -n $MYSQL  ]]; then
-	
-		DB_HOST=`echo $MYSQL | cut -d: -f1`
-		DB_PORT=`echo $MYSQL | cut -d: -f2`
+	if [[  -z $DB_HOST && -z $DB_USER && -z $DB_NAME && -z $DB_PASSWORD  ]]; then
+		if [[  -z $MYSQL_PORT  ]]; then
 		
-		if [[  -n $MYSQL_USER  ]]; then export DB_USER="$MYSQL_USER"; else export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`; fi
-		if [[  -n $MYSQL_PASSWORD ]]; then export DB_PASSWORD="$MYSQL_PASSWORD"; else export DB_PASSWORD=`openssl rand -hex 12`; fi
-		if [[  -z $MYSQL_NAME ]]; then export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && wps_mysql_create; fi
-
-	elif [[  -z $MYSQL  ]]; then
-
-		export DB_HOST="127.0.0.1"
-		export DB_NAME="$user"
-		export DB_USER="$user"
-		export DB_PASSWORD=`openssl rand -hex 12`
-		export MYSQL="${DB_HOST}:${DB_PORT}"
+			export WPS_MYSQL="127.0.0.1:3306"
+			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
+			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
+			export DB_USER="$user"
+			export DB_NAME="$user"
+			export DB_PASSWORD=`openssl rand -hex 12`
 		
+		elif [[  -n $MYSQL_PORT  ]]; then 
+			
+			export WPS_MYSQL=`echo $MYSQL_PORT | cut -d/ -f3`
+			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
+			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
+			
+			if [[  -z $MYSQL_ENV_MYSQL_USER  ]];
+			then export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
+			else export DB_USER="$MYSQL_ENV_MYSQL_USER"
+			fi
+			
+			if [[  -z $MYSQL_ENV_MYSQL_PASSWORD  ]];
+			then export DB_PASSWORD=`openssl rand -hex 12`
+			else export DB_PASSWORD="$MYSQL_ENV_MYSQL_PASSWORD"
+			fi
+			
+			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
+			then export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && wps_mysql_create
+			else export DB_NAME="$MYSQL_ENV_MYSQL_NAME"
+			fi
+		fi
 	fi
-	
+		
 
 # ENV.
 # ---------------------------------------------------------------------------------
 
 
-	if [[  -n $MEMCACHED  ]]; then
-	export WP_MEMCACHED_HOST=`echo $MEMCACHED | cut -d: -f1`
-	export WP_MEMCACHED_PORT=`echo $MEMCACHED | cut -d: -f2`
+	if [[  -n $MEMCACHED_PORT  ]]; then
+	export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
+	export WP_MEMCACHED_HOST=`echo $WPS_MEMCACHED | cut -d: -f1`
+	export WP_MEMCACHED_PORT=`echo $WPS_MEMCACHED | cut -d: -f2`
 	fi
 	
-	if [[  -n $REDIS  ]]; then
-	export WP_REDIS_HOST=`echo $REDIS | cut -d: -f1`
-	export WP_REDIS_PORT=`echo $REDIS | cut -d: -f2`
+	if [[  -n $REDIS_PORT  ]]; then
+	export WPS_REDIS=`echo $REDIS_PORT | cut -d/ -f3`
+	export WP_REDIS_HOST=`echo $WPS_REDIS | cut -d: -f1`
+	export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
 	fi
 	
 	if [[  $WP_SSL == 'true'  ]];
