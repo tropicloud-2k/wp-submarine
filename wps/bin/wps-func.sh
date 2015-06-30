@@ -76,7 +76,7 @@ wps_version(){
 
 wps_chmod() { 
 
-	chown -R $user:nginx $home
+	chown -R $user:nginx $home /var/lib/nginx/
 	chmod -R 755 $home
 
 	find $home -type f -exec chmod 644 {} \;
