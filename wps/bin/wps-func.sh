@@ -82,7 +82,7 @@ wps_chmod() {
 	find $home -type d -exec chmod 755 {} \;
 	
 	touch /var/log/nginx/error.log
-	chown $user:ngnx /var/log/nginx/error.log
+	chown $user:nginx /var/log/nginx/error.log
 	
 }
 
