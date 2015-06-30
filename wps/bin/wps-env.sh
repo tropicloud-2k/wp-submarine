@@ -4,7 +4,7 @@ wps_env() {
 # MYSQL 
 # ---------------------------------------------------------------------------------
 
-	if [[  -z $DB_HOST && -z $DB_USER && -z $DB_NAME && -z $DB_PASSWORD  ]]; then
+	if [[ -z $DB_HOST ]] && [[ -z $DB_USER ]] && [[ -z $DB_NAME ]] && [[ -z $DB_PASSWORD ]]; then
 		if [[  -z $MYSQL_PORT  ]]; then
 		
 			export WPS_MYSQL="127.0.0.1:3306"
