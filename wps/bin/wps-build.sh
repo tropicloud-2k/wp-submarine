@@ -1,9 +1,12 @@
 
+# WPS BUILD
+# ---------------------------------------------------------------------------------	
+
 wps_build() { wps_header "Building image"
 
 
-# PACKGES
-# ---------------------------------------------------------------------------------	
+	# PACKGES
+	# -----------------------------------------------------------------------------	
 	
 	apk add --update \
 		mariadb-client \
@@ -39,36 +42,36 @@ wps_build() { wps_header "Building image"
 	rm -rf /var/lib/apt/lists/*
 
 	
-# ADMINER
-# ---------------------------------------------------------------------------------
+	# ADMINER
+	# -----------------------------------------------------------------------------	
 	
 	mkdir -p /usr/local/adminer
 	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/index.php
 
 	
-# COMPOSER
-# ---------------------------------------------------------------------------------
+	# COMPOSER
+	# -----------------------------------------------------------------------------	
 
 	curl -sS https://getcomposer.org/installer | php
 	mv composer.phar /usr/local/bin/composer
 
 	
-# PREDIS
-# ---------------------------------------------------------------------------------
+	# PREDIS
+	# -----------------------------------------------------------------------------	
 	
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
 
 	
-# WP-CLI
-# ---------------------------------------------------------------------------------
+	# WP-CLI
+	# -----------------------------------------------------------------------------	
 
 	curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
 
 	
-# WP-USER
-# ---------------------------------------------------------------------------------
+	# WP-USER
+	# -----------------------------------------------------------------------------	
 	
 	chmod +x /wps/wps.sh && ln -s /wps/wps.sh /usr/bin/wps
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
@@ -78,12 +81,13 @@ wps_build() { wps_header "Building image"
 	mkdir -p $home/init.d
 	mkdir -p $home/log/nginx
 	mkdir -p $home/log/php
-# 	mkdir -p $home/tmp/nginx
 	mkdir -p $home/ssl
 	
 	cat /wps/etc/.profile > /root/.profile
 	cat /wps/etc/.profile > $home/.profile
 		
+	# -----------------------------------------------------------------------------	
+
 	wps_header "Build completed"
 }
 

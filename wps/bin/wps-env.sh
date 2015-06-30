@@ -82,14 +82,7 @@ wps_env() {
 
 	echo '' > /etc/.env && env | grep = >> /etc/.env
 
+	# -----------------------------------------------------------------------------	
 
-# SUPERVISOR
-# ---------------------------------------------------------------------------------
-	
-	cat /wps/etc/supervisord.conf \
-	| sed -e "s/example.com/$HOSTNAME/g" \
-	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
-	> /etc/supervisord.conf && chmod 644 /etc/supervisord.conf
-
-	echo -e "$(date +%Y-%m-%d\ %T) environment setup completed." >> $home/log/wps-install.log
+	wps_header "`date +%Y-%m-%d\ %T` environment setup completed." >> $home/log/wps-install.log
 }

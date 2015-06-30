@@ -15,7 +15,7 @@ wps_start() {
 		else /usr/bin/supervisorctl -u $HOSTNAME -p $WPS_PASSWORD start $2
 		fi
 
-	else wps_chmod && exec /usr/bin/supervisord -n -c /etc/supervisord.conf
+	else wps_chmod && exec /usr/bin/supervisord -n -c /home/wordpress/conf.d/supervisord.conf
 	fi
 }
 

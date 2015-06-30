@@ -1,6 +1,14 @@
 
 wps_setup() {
 		
+	# MSMTP
+	# ---------------------------------------------------------------------------------
+
+	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
+	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
+	touch /var/log/msmtp.log
+	chmod 777 /var/log/msmtp.log
+	
 	# NGINX
 	# ---------------------------------------------------------------------------------
 
@@ -22,14 +30,14 @@ wps_setup() {
 	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
 	fi
 
-	# MSMTP
-	# ---------------------------------------------------------------------------------
-
-	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
-	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
-	touch /var/log/msmtp.log
-	chmod 777 /var/log/msmtp.log
+	# SUPERVISOR
+	# -----------------------------------------------------------------------------	
 	
+	cat /wps/etc/supervisord.conf \
+	| sed -e "s/example.com/$HOSTNAME/g" \
+	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
+	> /home/wordpress/conf.d/supervisord.conf
+
 	# WORDPRESS
 	# ---------------------------------------------------------------------------------
 	
@@ -46,4 +54,5 @@ wps_setup() {
 	
 	# hide "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
 	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
+
 }
