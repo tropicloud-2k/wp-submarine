@@ -76,8 +76,8 @@ wps_version(){
 
 wps_chmod() { 
 
-	chown -R nginx:nginx /var/log/nginx && chmod -R 770 /var/log/nginx
-	chown -R nginx:nginx /var/lib/nginx && chmod -R 770 /var/lib/nginx
+	chown -R nginx:nginx /var/log/nginx && chmod -R 775 /var/log/nginx
+	chown -R nginx:nginx /var/lib/nginx && chmod -R 775 /var/lib/nginx
 	
 	chown -R $user:nginx $home
 		
