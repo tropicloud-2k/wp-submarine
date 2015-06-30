@@ -11,11 +11,11 @@ wps_start() {
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
 		if [[  -z $2  ]];
-		then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD start all
-		else /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD start $2
+		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start all
+		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $2
 		fi
 
-	else wps_chmod && exec /usr/bin/supervisord -n -c $SUPERVISORD_CONF
+	else wps_chmod && su -l $user -c "exec supervisord -n -c $SUPERVISORD_CONF"
 	fi
 }
 
@@ -30,8 +30,8 @@ wps_stop() {
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
 		if [[  -z $2  ]];
-		then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD stop all
-		else /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD stop $2
+		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop all
+		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $2
 		fi
 	
 	fi
@@ -49,8 +49,8 @@ wps_restart() {
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
 		if [[  -z $2  ]];
-		then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD restart all
-		else /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD restart $2
+		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart all
+		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $2
 		fi
 		
 	else exec /usr/bin/supervisord -n -c /etc/supervisord.conf
@@ -67,7 +67,7 @@ wps_reload() {
 	wps_header "Reload"
 
 	if [[  -f /tmp/supervisord.pid  ]];
-	then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD reload
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF reload
 	fi
 	echo ""
 }
@@ -81,7 +81,7 @@ wps_shutdown() {
 	wps_header "Shutdown"
 
 	if [[  -f /tmp/supervisord.pid  ]];
-	then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD shutdown
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF shutdown
 	fi
 	echo ""
 }
@@ -97,8 +97,8 @@ wps_status() {
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
 		if [[  -z $2  ]];
-		then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD status all
-		else /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD status $2
+		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF status all
+		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF status $2
 		fi
 	
 	fi
@@ -114,7 +114,7 @@ wps_log() {
 	wps_header "Log"
 	
 	if [[  -f /tmp/supervisord.pid  ]];
-	then /usr/bin/supervisorctl -c $SUPERVISORD_CONF -u $HOSTNAME -p $WPS_PASSWORD maintail
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF maintail
 	fi
 	echo ""
 }
