@@ -44,8 +44,6 @@ wps_setup() {
 	echo -ne "Installing WordPress..."
 	while ! wps_wp_status true; do echo -n '.'; sleep 1; done; echo -ne " done.\n"
 	
-	s="" && q=`cat $home/log/wps-wordpress.log | grep -q "$s"`	
-	s="Plugin 'wp-ffpc' activated"; if [[  $q true  ]]; then echo $s; fi
-	s="Plugin 'redis-cache' activated"; if [[  $q true  ]]; then echo $s; fi
-	s="WordPress installed successfully"; if [[  $q true  ]]; then echo $s; fi
+	# hide "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
+	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 }

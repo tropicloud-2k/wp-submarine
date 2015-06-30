@@ -91,11 +91,5 @@ wps_env() {
 	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
 	> /etc/supervisord.conf && chmod 644 /etc/supervisord.conf
 
-
-# ---------------------------------------------------------------------------------
-
-	# hide "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
-	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
-
 	echo -e "$(date +%Y-%m-%d\ %T) environment setup completed." >> $home/log/wps-install.log
 }
