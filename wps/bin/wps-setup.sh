@@ -39,7 +39,7 @@ wps_setup() {
 	su -l $user -c "cd $www && composer install"
 
 	wps_wp_install > $home/log/wps-wordpress.log 2>&1 & 			
-	wps_wp_status() { cat $home/log/wps-install.log | grep -q "WordPress setup completed"; }
+	wps_wp_status() { cat $home/log/wps-install.log | grep -q "wordpress setup completed"; }
 		
 	echo -ne "Installing WordPress..."
 	while ! wps_wp_status true; do echo -n '.'; sleep 1; done; echo -ne " done.\n"
