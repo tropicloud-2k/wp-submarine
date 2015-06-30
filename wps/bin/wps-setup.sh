@@ -49,7 +49,7 @@ wps_setup() {
 	wps_wp_install > $home/log/wps/wp-install.log 2>&1 & 			
 		
 	echo -ne "Installing WordPress..."
-	wps_wp_status() { cat $home/log/wps/wp-install.log | grep -q 'WordPress installed successfully'; }
+	wps_wp_status() { cat $home/log/wps/wp-install.log 2>/dev/null | grep -q 'WordPress installed successfully'; }
 	while ! wps_wp_status true; do echo -n '.'; sleep 1; done; echo -ne " done.\n"
 	
 	# -----------------------------------------------------------------------------	
