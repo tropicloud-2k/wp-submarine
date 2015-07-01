@@ -75,9 +75,16 @@ wps_env() {
 	export SECURE_AUTH_SALT="`openssl rand 48 -base64`"
 	export LOGGED_IN_SALT="`openssl rand 48 -base64`"
 	export NONCE_SALT="`openssl rand 48 -base64`"
+	
 
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
+
+	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.nginx_env
+	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.nginx_env
+	echo -e "set \$DB_USER $DB_USER;" >> $home/.nginx_env
+	echo -e "set \$WPS_REDIS $WPS_REDIS;" >> $home/.nginx_env
+	echo -e "set \$WPS_MEMCACHED $WPS_MEMCACHED;" >> $home/.nginx_env
 
 	echo '' > $home/.env && env | grep = >> $home/.env
 

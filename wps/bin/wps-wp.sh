@@ -31,7 +31,7 @@ wps_wp_plugins() {
 
 	if [[  ! -z $MEMCACHED_PORT  ]]; then
 		wp plugin install wp-ffpc --activate
-		sed -i "s/127.0.0.1:11211/$WPS_MEMCACHED/g" $home/conf.d/wordpress.conf		
+		sed -i "s/127.0.0.1:11211/$WPS_MEMCACHED/g" $home/conf.d/nginx.conf		
 		curl -sL https://raw.githubusercontent.com/petermolnar/wp-ffpc/master/wp-ffpc.php \
 		| sed "s/127.0.0.1:11211/$WPS_MEMCACHED/g" \
 		| sed "s/'memcached'/'memcache'/g" \
@@ -44,7 +44,7 @@ wps_wp_plugins() {
 	
 	if [[  ! -z $REDIS_PORT  ]]; then
 		wp plugin install redis-cache --activate
-		sed -i "s/127.0.0.1:11211/$WPS_REDIS/g" $home/conf.d/wordpress.conf
+		sed -i "s/127.0.0.1:11211/$WPS_REDIS/g" $home/conf.d/nginx.conf
 		echo "define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));" >> $www/config/environments/production.php
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
