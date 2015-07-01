@@ -53,7 +53,7 @@ wps_restart() {
 		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $2
 		fi
 		
-	else exec /usr/bin/supervisord -n -c /etc/supervisord.conf
+	else wps_chmod && su -l $user -c "exec supervisord -n -c $SUPERVISORD_CONF"
 	fi
 	echo ""
 }
