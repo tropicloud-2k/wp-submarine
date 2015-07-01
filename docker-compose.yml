@@ -2,7 +2,7 @@ data:
   build: . 
   volumes:
     - /home/wordpress
-    - /etc/nginx/certs
+    - /var/ssl:/home/wordpress/ssl
   command: /bin/true
 web:
   build: . 
@@ -18,12 +18,12 @@ nginx:
   ports:
     - "80:80"
     - "443:443"
-  volumes_from:
-    - data
+  volumes:
+    - /var/ssl:/home/wordpress/ssl
+    - /var/run/docker.sock:/tmp/docker.sock:ro
 mysql:
   image: mariadb
-  environment:
-    - MYSQL_ROOT_PASSWORD: mysecretpasswd
+  env_file: .env
 redis:
   image: redis
 memcached:
