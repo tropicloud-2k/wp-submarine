@@ -6,13 +6,13 @@ wps_start() {
 
 	wps_check
 
-	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+	if [[  -z $2  ]]; then PROG="all"; else PROG="$2"; fi
 
-	wps_header "Starting $WPS_PROG"
+	wps_header "Starting $PROG"
 	wps_links && echo ""
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $WPS_PROG
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $PROG
 	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
 	fi
 }
@@ -23,12 +23,12 @@ wps_start() {
 
 wps_stop() { 
 	
-	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+	if [[  -z $2  ]]; then PROG="all"; else PROG="$2"; fi
 	
-	wps_header "Stopping $WPS_PROG"
+	wps_header "Stopping $PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $WPS_PROG		
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $PROG		
 	fi
 	echo ""
 }
@@ -39,12 +39,12 @@ wps_stop() {
 
 wps_restart() { 
 	
-	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+	if [[  -z $2  ]]; then PROG="all"; else PROG="$2"; fi
 	
-	wps_header "Restarting $WPS_PROG"
+	wps_header "Restarting $PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $WPS_PROG
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $PROG
 	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
 	fi
 	echo ""
@@ -129,7 +129,7 @@ wps_ps() {
 
 wps_login() { 
 	
-	wps_header "\033[0mLogged in as \033[1;37m$user\033[0m"
+	wps_header "Logged in as \033[1;37m$user\033[0m"
 
 	su -l $user
 }
@@ -140,7 +140,7 @@ wps_login() {
 
 wps_root() { 
 	
-	wps_header "\033[0mLogged in as \033[1;37mroot\033[0m"
+	wps_header "Logged in as \033[1;37mroot\033[0m"
 
 	su -l root
 }
