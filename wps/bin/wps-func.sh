@@ -2,17 +2,25 @@
 # CHECK
 # ---------------------------------------------------------------------------------
 
+# wps_check() {
+# 	case "$HOSTNAME" in
+# 		*.*) wps_true;;
+# 		*) wps_false;;
+# 	esac
+# }
+
 wps_check() {
-	case "$HOSTNAME" in
-		*.*) wps_true;;
-		*) wps_false;;
-	esac
+	if [[  -n $VIRTUAL_HOST  ]];
+	then wps_true
+	else wps_false
+	fi
 }
 
 wps_true() {
-# 	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
-# 	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
-	if [[  -d $www  ]]; then /bin/true; else wps_setup; fi
+	if [[  -d $www  ]];
+	then /bin/true
+	else wps_setup
+	fi
 }
 
 wps_false() {
