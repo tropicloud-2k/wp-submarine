@@ -46,14 +46,12 @@ wps_env() {
 	then export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
 	     export WP_MEMCACHED_HOST=`echo $WPS_MEMCACHED | cut -d: -f1`
 	     export WP_MEMCACHED_PORT=`echo $WPS_MEMCACHED | cut -d: -f2`
-	else export WPS_MEMCACHED="127.0.0.1:11211"
 	fi
 	
 	if [[  ! -z $REDIS_PORT  ]];
 	then export WPS_REDIS=`echo $REDIS_PORT | cut -d/ -f3`
 	     export WP_REDIS_HOST=`echo $WPS_REDIS | cut -d: -f1`
 	     export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
-	else export WPS_REDIS="127.0.0.1:6379"
 	fi
 	
 	if [[  $WP_SSL == 'true'  ]];
@@ -75,20 +73,18 @@ wps_env() {
 	export SECURE_AUTH_SALT="`openssl rand 48 -base64`"
 	export LOGGED_IN_SALT="`openssl rand 48 -base64`"
 	export NONCE_SALT="`openssl rand 48 -base64`"
-	
 
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
-	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.nginx_env
-	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.nginx_env
-	echo -e "set \$DB_USER $DB_USER;" >> $home/.nginx_env
-	echo -e "set \$WPS_REDIS $WPS_REDIS;" >> $home/.nginx_env
-	echo -e "set \$WPS_MEMCACHED $WPS_MEMCACHED;" >> $home/.nginx_env
+	echo -e "set \$MYSQL_HOST $DB_HOST;" >> $home/.adminer
+	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
+	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
+
+# DUMP
+# ---------------------------------------------------------------------------------
 
 	echo '' > $home/.env && env | grep = >> $home/.env
-
-	# -----------------------------------------------------------------------------	
 
 	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/log/wps/install.log
 }
