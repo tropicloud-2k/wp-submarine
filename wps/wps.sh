@@ -15,8 +15,8 @@ export home="/home/$user"
 export www="$home/www"
 export web="$www/web"
 
-if [[  -f /etc/.env  ]]; then
-	. /etc/.env 
+if [[  -f $home/.env  ]]; then
+	. $home/.env 
 fi
 
 
