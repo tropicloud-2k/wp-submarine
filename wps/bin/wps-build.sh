@@ -2,8 +2,11 @@
 # WPS BUILD
 # ---------------------------------------------------------------------------------	
 
-wps_build() { wps_header "Build"
+wps_build() { 
 
+	wps_header "Build"
+
+	chmod +x /wps/wps.sh && ln -s /wps/wps.sh /usr/bin/wps
 
 	# PACKGES
 	# -----------------------------------------------------------------------------	
@@ -65,8 +68,6 @@ wps_build() { wps_header "Build"
 	curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
 	
-	# -----------------------------------------------------------------------------	
-
 	wps_header "Done!"
 }
 
