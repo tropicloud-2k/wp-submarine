@@ -1,5 +1,11 @@
+data:
+  build: . 
+  volumes:
+    - /home/wordpress
+    - /etc/nginx/certs
+  command: /bin/true
 web:
-  build: .
+  build: . 
   links:
     - mysql
     - redis
@@ -7,11 +13,6 @@ web:
   env_file: .env
   volumes_from:
     - data
-data:
-  build .
-  volumes:
-    - /home/wordpress
-    - /etc/nginx/certs
 nginx:
   image: jwilder/nginx-proxy
   ports:
@@ -22,7 +23,7 @@ nginx:
 mysql:
   image: mariadb
   environment:
-    MYSQL_ROOT_PASSWORD: mysecretpasswd
+    - MYSQL_ROOT_PASSWORD: mysecretpasswd
 redis:
   image: redis
 memcached:
