@@ -25,7 +25,7 @@ wps_mariadb_create() {
 
 wps_mysql_setup() {
 
-	wps_header "MariaDB Setup"
+	wps_header "Installing MariaDB"
 	
 	apk add mariadb --update
 	rm -rf /var/cache/apk/*

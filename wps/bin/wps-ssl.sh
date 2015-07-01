@@ -4,7 +4,7 @@
 
 wps_ssl() {
 
-	wps_header "SSL Setup"
+	wps_header "Creating SSL cert."
 
 	if [[  ! -f $home/ssl/${HOSTNAME}.crt  ]]; then
 

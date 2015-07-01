@@ -44,7 +44,7 @@ wps_setup() {
 	# WORDPRESS
 	# ---------------------------------------------------------------------------------
 	
-	wps_header "WordPress Setup"
+	wps_header "Installing WordPress"
 	
 	su -l $user -c "git clone $WP_REPO $www" && wps_version
 	su -l $user -c "cd $www && composer install"
