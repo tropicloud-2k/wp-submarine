@@ -10,8 +10,8 @@ wps_check() {
 }
 
 wps_true() {
-	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
-	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
+# 	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
+# 	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
 	if [[  -d $www  ]]; then /bin/true; else wps_setup; fi
 }
 
