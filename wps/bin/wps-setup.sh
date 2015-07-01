@@ -15,8 +15,10 @@ wps_setup() {
 	# NGINX
 	# ---------------------------------------------------------------------------------
 
-	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
 	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
+	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
+	echo -e "environment=DB_HOST=$DB_HOST,DB_USER=$DB_USER,DB_NAME=$DB_NAME,WPS_MYSQL=$WPS_MYSQL,WPS_MEMCACHED=$WPS_MEMCACHED,WPS_REDIS=$WPS_REDIS" \
+	>> $home/init.d/nginx.ini
 	
 	if [[  $WP_SSL == 'true'  ]];
 	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl

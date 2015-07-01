@@ -13,7 +13,7 @@
 export user="wordpress"
 export home="/home/$user"
 export www="$home/www"
-export env="$www/.env"
+export env="$home/.env"
 export web="$www/web"
 
 if [[  -f $env  ]]; then
