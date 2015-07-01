@@ -4,6 +4,7 @@
 
 wps_core_install() {
 
+	cd $web	
 	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
 	wp rewrite structure '/%postname%/'
 	wps_wp_plugins
