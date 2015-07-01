@@ -5,6 +5,7 @@ wps_env() {
 # ---------------------------------------------------------------------------------
 
 	if [[ -z $DB_HOST ]] && [[ -z $DB_USER ]] && [[ -z $DB_NAME ]] && [[ -z $DB_PASSWORD ]]; then
+
 		if [[  -z $MYSQL_PORT  ]]; then
 		
 			export WPS_MYSQL="127.0.0.1:3306"
@@ -13,7 +14,7 @@ wps_env() {
 			export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
 			export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16`
 			export DB_PASSWORD=`openssl rand -hex 12`
-			export DB_PREFIX="wps-`openssl rand -hex 3`_"
+			export DB_PREFIX=wps-`openssl rand -hex 3`_
 		
 		elif [[  -n $MYSQL_PORT  ]]; then 
 			
@@ -29,6 +30,10 @@ wps_env() {
 			if [[  -z $MYSQL_ENV_MYSQL_PASSWORD  ]];
 			then export DB_PASSWORD=`openssl rand -hex 12`
 			else export DB_PASSWORD=$MYSQL_ENV_MYSQL_PASSWORD
+			fi
+			
+			if [[  -z $DB_PREFIX  ]];
+			then export DB_PREFIX=wps-`openssl rand -hex 3`_
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
