@@ -15,7 +15,7 @@ wps_start() {
 		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $2
 		fi
 
-	else wps_chmod && su -l $user -c "exec supervisord -n -c $SUPERVISORD_CONF"
+	else wps_chmod && exec su -l $user -c "supervisord -n -c $SUPERVISORD_CONF"
 	fi
 }
 
