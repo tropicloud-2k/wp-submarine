@@ -1,7 +1,7 @@
 
 wps_setup() {
 		
-	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
+	if [[  ! -f $home/.env  ]]; then wps_env; fi
 	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
 
 	# MSMTP
@@ -48,6 +48,7 @@ wps_setup() {
 	
 	su -l $user -c "git clone $WP_REPO $www" && wps_version
 	su -l $user -c "cd $www && composer install"
+	ln -s $home/.env $www/.env
 
 	wps_wp_install > $home/log/wps/wp-install.log 2>&1 & 			
 		

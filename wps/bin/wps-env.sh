@@ -83,7 +83,7 @@ wps_env() {
 	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
 
-	echo '' > /etc/.env && env | grep = >> /etc/.env
+	echo '' > $home/.env && env | grep = >> $home/.env
 
 	# -----------------------------------------------------------------------------	
 

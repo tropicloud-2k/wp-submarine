@@ -10,8 +10,6 @@ wps_core_install() {
 }
 
 wps_wp_install() {
-
-	for var in `cat /etc/.env`; do echo $var >> $www/.env; done && cd $web
 		
 	if [[  -n "$WP_TITLE" && -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
 		if [[  -z $MYSQL_PORT  ]]; then
@@ -20,6 +18,7 @@ wps_wp_install() {
 			mysqladmin -u root shutdown
 		else wps_core_install
 		fi
+	else echo "`date +%Y-%m-%d\ %T` WordPress installed successfully." >> $home/log/wps/wp-install.log
 	fi
 }
 
