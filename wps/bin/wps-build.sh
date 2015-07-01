@@ -82,6 +82,7 @@ wps_build() { wps_header "Building image"
 	mkdir -p $home/log/nginx
 	mkdir -p $home/log/php
 	mkdir -p $home/log/wps
+	mkdir -p $home/log/smtp
 	mkdir -p $home/ssl
 	
 	cat /wps/etc/.profile > /root/.profile

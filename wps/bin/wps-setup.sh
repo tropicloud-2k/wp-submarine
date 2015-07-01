@@ -9,8 +9,8 @@ wps_setup() {
 
 	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
 	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
-	touch /var/log/msmtp.log
-	chmod 777 /var/log/msmtp.log
+# 	touch /var/log/msmtp.log
+# 	chmod 777 /var/log/msmtp.log
 	
 	# NGINX
 	# ---------------------------------------------------------------------------------
