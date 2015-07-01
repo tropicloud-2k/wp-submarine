@@ -4,7 +4,7 @@
 
 wps_build() {
 
-	wps_header "Build"
+	wps_header "Building image"
 
 	# PACKGES
 	# -----------------------------------------------------------------------------	

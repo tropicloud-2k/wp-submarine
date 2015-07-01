@@ -5,16 +5,14 @@
 wps_start() { 
 
 	wps_check
-	wps_header "Start"
+
+	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+
+	wps_header "Starting $WPS_PROG"
 	wps_links && echo ""
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
-	
-		if [[  -z $2  ]];
-		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start all
-		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $2
-		fi
-
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $WPS_PROG
 	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
 	fi
 }
@@ -25,15 +23,12 @@ wps_start() {
 
 wps_stop() { 
 	
-	wps_header "Stop"
+	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+	
+	wps_header "Stopping $WPS_PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-	
-		if [[  -z $2  ]];
-		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop all
-		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $2
-		fi
-	
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $WPS_PROG		
 	fi
 	echo ""
 }
@@ -44,15 +39,12 @@ wps_stop() {
 
 wps_restart() { 
 	
-	wps_header "Restart"
+	if [[  -z $2  ]]; then WPS_PROG="all"; else WPS_PROG="$2"; fi
+	
+	wps_header "Restarting $WPS_PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-	
-		if [[  -z $2  ]];
-		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart all
-		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $2
-		fi
-		
+		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $WPS_PROG
 	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
 	fi
 	echo ""
@@ -64,7 +56,7 @@ wps_restart() {
 
 wps_reload() { 
 	
-	wps_header "Reload"
+	wps_header "Reloading supervisord"
 
 	if [[  -f /tmp/supervisord.pid  ]];
 	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF reload
@@ -78,7 +70,7 @@ wps_reload() {
 
 wps_shutdown() { 
 	
-	wps_header "Shutdown"
+	wps_header "Shutting down!"
 
 	if [[  -f /tmp/supervisord.pid  ]];
 	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF shutdown
@@ -125,7 +117,7 @@ wps_log() {
 
 wps_ps() { 
 	
-	wps_header "Container Processes"
+	wps_header "Container processes"
 
 	ps auxf
 	echo ""
@@ -137,7 +129,7 @@ wps_ps() {
 
 wps_login() { 
 	
-	wps_header "\033[0mLogged as \033[1;37m$user\033[0m"
+	wps_header "\033[0mLogged in as \033[1;37m$user\033[0m"
 
 	su -l $user
 }
@@ -148,7 +140,7 @@ wps_login() {
 
 wps_root() { 
 	
-	wps_header "\033[0mLogged as \033[1;37mroot\033[0m"
+	wps_header "\033[0mLogged in as \033[1;37mroot\033[0m"
 
 	su -l root
 }
