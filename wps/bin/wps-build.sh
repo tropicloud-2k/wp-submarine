@@ -84,9 +84,8 @@ wps_build() {
 	mkdir -p $home/log/php
 	mkdir -p $home/log/wps
 	mkdir -p $home/log/smtp
-	mkdir -p $home/ssl
 	mkdir -p /etc/nginx/certs
-	
+	ln -s /etc/nginx/certs $home/ssl
 	cat /wps/etc/.profile > /root/.profile
 	cat /wps/etc/.profile > $home/.profile
 		
