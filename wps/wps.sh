@@ -13,10 +13,13 @@
 export user="wordpress"
 export home="/home/$user"
 export www="$home/www"
+export env="$www/.env"
 export web="$www/web"
 
-if [[  -f $home/.env  ]]; then
-	. $home/.env 
+if [[  -f $env  ]]; then
+for var in `cat $env`; do 
+	export $var
+done
 fi
 
 
