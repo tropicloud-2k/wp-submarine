@@ -2,8 +2,9 @@
 # WPS BUILD
 # ---------------------------------------------------------------------------------	
 
-wps_build() { wps_header "Building image"
+wps_build() {
 
+	wps_header "Build"
 
 	# PACKGES
 	# -----------------------------------------------------------------------------	
@@ -90,6 +91,6 @@ wps_build() { wps_header "Building image"
 		
 	# -----------------------------------------------------------------------------	
 
-	wps_header "Build completed"
+	wps_header "Done!"
 }
 
