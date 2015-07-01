@@ -79,9 +79,9 @@ wps_env() {
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
-# 	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
-# 	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
-# 	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
+	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
+	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
+	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
 
 	echo '' > /etc/.env && env | grep = >> /etc/.env
 
