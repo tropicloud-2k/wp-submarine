@@ -42,16 +42,18 @@ wps_env() {
 # ---------------------------------------------------------------------------------
 
 
-	if [[  ! -z $MEMCACHED_PORT  ]]; then
-	export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
-	export WP_MEMCACHED_HOST=`echo $WPS_MEMCACHED | cut -d: -f1`
-	export WP_MEMCACHED_PORT=`echo $WPS_MEMCACHED | cut -d: -f2`
+	if [[  ! -z $MEMCACHED_PORT  ]];
+	then export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
+	     export WP_MEMCACHED_HOST=`echo $WPS_MEMCACHED | cut -d: -f1`
+	     export WP_MEMCACHED_PORT=`echo $WPS_MEMCACHED | cut -d: -f2`
+	else export WPS_MEMCACHED="127.0.0.1:11211"
 	fi
 	
-	if [[  ! -z $REDIS_PORT  ]]; then
-	export WPS_REDIS=`echo $REDIS_PORT | cut -d/ -f3`
-	export WP_REDIS_HOST=`echo $WPS_REDIS | cut -d: -f1`
-	export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
+	if [[  ! -z $REDIS_PORT  ]];
+	then export WPS_REDIS=`echo $REDIS_PORT | cut -d/ -f3`
+	     export WP_REDIS_HOST=`echo $WPS_REDIS | cut -d: -f1`
+	     export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
+	else export WPS_REDIS="127.0.0.1:6379"
 	fi
 	
 	if [[  $WP_SSL == 'true'  ]];
@@ -77,9 +79,9 @@ wps_env() {
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
-	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
-	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
-	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
+# 	echo -e "set \$MYSQL_HOST $DB_HOST;" >  $home/.adminer
+# 	echo -e "set \$MYSQL_NAME $DB_NAME;" >> $home/.adminer
+# 	echo -e "set \$MYSQL_USER $DB_USER;" >> $home/.adminer
 
 	echo '' > /etc/.env && env | grep = >> /etc/.env
 
