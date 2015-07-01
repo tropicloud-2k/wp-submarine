@@ -1,0 +1,29 @@
+web:
+  build: .
+  links:
+    - mysql
+    - redis
+    - memcached
+  env_file: .env
+  volumes_from:
+    - data
+data:
+  build .
+  volumes:
+    - /home/wordpress
+    - /etc/nginx/certs
+nginx:
+  image: jwilder/nginx-proxy
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes_from:
+    - data
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_ROOT_PASSWORD: mysecretpasswd
+redis:
+  image: redis
+memcached:
+  image: memcached
