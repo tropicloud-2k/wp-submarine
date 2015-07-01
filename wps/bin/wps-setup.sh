@@ -4,22 +4,6 @@ wps_setup() {
 	if [[  -f /etc/.env  ]]; then /bin/true; else wps_env; fi
 	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
 
-	# WP-USER
-	# -----------------------------------------------------------------------------	
-	
-	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
-	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
-	
-	mkdir -p $home/conf.d
-	mkdir -p $home/init.d
-	mkdir -p $home/log/nginx
-	mkdir -p $home/log/php
-	mkdir -p $home/log/wps
-	mkdir -p $home/ssl
-	
-	cat /wps/etc/.profile > /root/.profile
-	cat /wps/etc/.profile > $home/.profile
-		
 	# MSMTP
 	# ---------------------------------------------------------------------------------
 
