@@ -23,5 +23,5 @@ wps_ssl() {
 
 	# -----------------------------------------------------------------------------	
 
-	echo -e "`date +%Y-%m-%d\ %T` SSL setup completed." >> $home/log/wps/install.log	
+	echo -e "`date +%Y-%m-%d\ %T` SSL setup completed." >> $home/logs/wps/install.log	
 }

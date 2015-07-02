@@ -67,7 +67,7 @@ wps_env() {
 	
 	export WP_SITEURL="${WP_HOME}/wp"
 	export WPS_PASSWORD="`openssl rand 12 -hex`"
-	export SUPERVISORD_CONF="$home/conf.d/supervisord.conf"
+	export SUPERVISORD_CONF="$conf/supervisor/supervisord.conf"
 	export HOME="/home/wordpress"
 	export VISUAL="nano"
 	
@@ -92,5 +92,5 @@ wps_env() {
 
 	echo '' > $home/.env && env | grep = >> $home/.env
 
-	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/log/wps/install.log
+	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps/install.log
 }
