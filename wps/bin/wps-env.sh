@@ -25,7 +25,7 @@ wps_env() {
 			then export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
 			else export DB_USER=$MYSQL_ENV_MYSQL_USER
 			fi
-			
+
 			if [[  -z $MYSQL_ENV_MYSQL_PASSWORD  ]];
 			then export DB_PASSWORD=`openssl rand -hex 12`
 			else export DB_PASSWORD=$MYSQL_ENV_MYSQL_PASSWORD
@@ -37,7 +37,7 @@ wps_env() {
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
 			then export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && wps_mysql_create
-			else export DB_NAME=$MYSQL_ENV_MYSQL_PASSWORD
+			else export DB_NAME=$MYSQL_ENV_MYSQL_NAME
 			fi						
 		fi
 	fi
