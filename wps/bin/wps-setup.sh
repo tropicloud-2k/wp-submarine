@@ -33,7 +33,7 @@ wps_setup() {
 	# SUPERVISOR
 	# -----------------------------------------------------------------------------	
 	
-	sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
+	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 
 	# WORDPRESS
 	# ---------------------------------------------------------------------------------
