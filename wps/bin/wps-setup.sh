@@ -15,10 +15,10 @@ wps_setup() {
 	# NGINX
 	# ---------------------------------------------------------------------------------
 
-	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/etc/nginx.conf
 	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
+	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
 	
-	for f in `ls /wps/etc/nginx | grep 'wp-'`; do cat $f > $home/conf.d/$f; done
+	for f in `ls /wps/etc/nginx | grep 'wp-'`; do cat $f > $home/conf.d/nginx.d/$f; done
 	
 	if [[  $WP_SSL == 'true'  ]];
 	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl
@@ -31,8 +31,8 @@ wps_setup() {
 	cat /wps/etc/init.d/php-fpm.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/php-fpm.ini
 
 	if [[  $(free -m | grep 'Mem' | awk '{print $2}') -gt 1800  ]];
-	then cat /wps/etc/php/php-fpm.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/etc/php-fpm.conf
-	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/etc/php-fpm.conf
+	then cat /wps/etc/php/php-fpm.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
+	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
 	fi
 
 	# SUPERVISOR
