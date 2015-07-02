@@ -49,7 +49,7 @@ wps_mysql_install() {
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
-	mysql_create_local
+	mysql_create_local 2>&1
 	mysqladmin -u root shutdown
 	
 	# -----------------------------------------------------------------------------	
