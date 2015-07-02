@@ -51,7 +51,7 @@ wps_mysql_install() {
 	mysqld_safe > /dev/null 2>&1 &
 	
 	echo -ne "Creating mysql database..."
-	while ! wps_create_local true; do 
+	while ! mysql_create_local true; do 
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 	
