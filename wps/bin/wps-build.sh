@@ -57,10 +57,17 @@ wps_build() {
 	
 	# WP-SUBMARINE
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
+
 	cp -R /wps/usr/* $home
+
 	cp /wps/usr/.profile /root/.profile
 	cp /wps/usr/.profile $home/.profile
-	mkdir -p $home/logs/wps
+
+	logs_dir="msmtp nginx php supervisor wps"
+	for d in $logs_dir; do
+		mkdir -p $home/logs/$d
+	done	
+
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 

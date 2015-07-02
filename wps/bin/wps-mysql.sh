@@ -5,7 +5,7 @@
 mysql_create_link() {
 	
 	mysql_wait() {
-		echo -ne "Waiting mysql container..."
+		echo -ne "\nWaiting mysql container..."
 		while ! mysqladmin ping -h "$DB_HOST" --silent; do
 			echo -n '.' && sleep 1; 
 		done && echo -ne " done.\n"
