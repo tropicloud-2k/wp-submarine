@@ -33,7 +33,7 @@ or define it as an environment variable.\n
 wps_header() {
 	echo -e "\033[0;30m
 -----------------------------------------------------
-\033[1;37m  {\033[0;34mwps\033[1;37m}\033[0m - $1\033[0;30m
+\033[0;33m  wp-\033[1;37msubmarine\033[0m - $1\033[0;30m
 -----------------------------------------------------
 \033[0m"
 }
@@ -46,17 +46,17 @@ wps_links() {
 
 	if [[  ! $WPS_MYSQL == '127.0.0.1:3306'  ]];
 	then echo -e "\033[1;32m  •\033[0;37m MySQL\033[0m -> $WPS_MYSQL"
-	else echo -e "\033[1;33m  •\033[0;37m MySQL\033[0m (in container)"
+	else echo -e "\033[1;33m  •\033[0;37m MySQL\033[0m [in container]"
 	fi	
 	
 	if [[  ! -z $WPS_REDIS  ]];
 	then echo -e "\033[1;32m  •\033[0;37m Redis\033[0m -> $WPS_REDIS"		
-	else echo -e "\033[1;31m  •\033[0;37m Redis\033[0m (not linked)"
+	else echo -e "\033[1;31m  •\033[0;37m Redis\033[0m [not linked]"
 	fi		
 	
 	if [[  ! -z $WPS_MEMCACHED  ]];
 	then echo -e "\033[1;32m  •\033[0;37m Memcached\033[0m -> $WPS_MEMCACHED"
-	else echo -e "\033[1;31m  •\033[0;37m Memcached\033[0m (not linked)"
+	else echo -e "\033[1;31m  •\033[0;37m Memcached\033[0m [not linked]"
 	fi
 }
 
