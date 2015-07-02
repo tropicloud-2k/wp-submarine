@@ -51,3 +51,4 @@ wps_wp_plugins() {
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
 }
+
