@@ -2,7 +2,7 @@
 # WP INSTALL
 # ---------------------------------------------------------------------------------
 
-wps_core_install() {
+wps_wp_core() {
 
 	cd $web	
 	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
@@ -15,13 +15,15 @@ wps_wp_install() {
 	if [[  -n "$WP_TITLE" && -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
 		if [[  -z $MYSQL_PORT  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
-			while [[  ! -e /run/mysqld/mysqld.sock  ]]; do sleep 1; done && wps_core_install			
+			while [[  ! -e /run/mysqld/mysqld.sock  ]]; do sleep 1; done && wps_wp_core			
 			mysqladmin -u root shutdown
-		else wps_core_install
+		else wps_wp_core
 		fi
 	else echo "`date +%Y-%m-%d\ %T` WordPress installed successfully." >> $home/log/wps/wp-install.log
 	fi
 }
+
+wps_wp_status() { cat $home/log/wps/wp-install.log 2>/dev/null | grep -q 'WordPress installed successfully'; }
 
 
 # WP PLUGINS

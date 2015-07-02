@@ -6,12 +6,9 @@
 # version: 0.1
 # ---------------------------------------------------------------------------------
 
-
-# ENVIRONMENT
-# ---------------------------------------------------------------------------------
-
 export user="wordpress"
 export home="/home/$user"
+export conf="$home/config"
 export www="$home/www"
 export env="$home/.env"
 export web="$www/web"
@@ -22,14 +19,12 @@ for var in `cat $env`; do
 done
 fi
 
-
 # FUNCTIONS
 # ---------------------------------------------------------------------------------
 
 for f in /wps/bin/*; do
 	. $f
 done
-
 
 # COMMANDS
 # ---------------------------------------------------------------------------------
@@ -46,7 +41,6 @@ elif [[  $1 == 'ps'  ]];        then wps_ps $@
 elif [[  $1 == 'login'  ]];     then wps_login $@
 elif [[  $1 == 'root'  ]];      then wps_root $@
 elif [[  $1 == 'adminer'  ]];   then wps_adminer $@
-
 
 # HELP
 # ---------------------------------------------------------------------------------

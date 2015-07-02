@@ -1,46 +1,39 @@
 
 wps_setup() {
 		
-	if [[  ! -f $home/.env  ]]; then wps_env; fi
-	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_setup; fi	
+	# ENV.
+	# ---------------------------------------------------------------------------------
+
+	cp -R /wp/usr/* $home && find $conf -type f | xargs sed -i "s|example.com|$HOSTNAME|g"
+
+	if [[  ! -f $home/.env  ]];
+	then wps_env
+	fi
+	
+	# MYSQL
+	# ---------------------------------------------------------------------------------
+
+	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]];
+	then wps_mysql
+	fi	
 
 	# MSMTP
 	# ---------------------------------------------------------------------------------
 
-	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
 	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
+	ln -s $conf/smtp/msmtprc /etc/msmtprc
 	
 	# NGINX
 	# ---------------------------------------------------------------------------------
 
 	if [[  $WP_SSL == 'true'  ]];
-	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl
-	else cat /wps/etc/nginx/wp.conf    | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf
-	fi
-
-	for f in `ls /wps/etc/nginx | grep 'wp-'`; do cat /wps/etc/nginx/$f > $home/conf.d/nginx.d/$f; done
-
-	cat /wps/etc/init.d/nginx.ini   | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
-	cat /wps/etc/nginx/nginx.conf   | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
-	cat /wps/etc/nginx/fastcgi.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/fastcgi.conf
-	
-	# PHP-FPM
-	# ---------------------------------------------------------------------------------
-	
-	cat /wps/etc/init.d/php-fpm.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/php-fpm.ini
-
-	if [[  $(free -m | grep 'Mem' | awk '{print $2}') -gt 1800  ]];
-	then cat /wps/etc/php/php-fpm.conf     | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
-	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
+	then mv $conf/nginx/https.conf $conf/nginx/conf.d/https.conf && wps_ssl
 	fi
 
 	# SUPERVISOR
 	# -----------------------------------------------------------------------------	
 	
-	cat /wps/etc/supervisord.conf \
-	| sed -e "s/example.com/$HOSTNAME/g" \
-	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
-	> $SUPERVISORD_CONF
+	sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 
 	# WORDPRESS
 	# ---------------------------------------------------------------------------------
@@ -53,9 +46,9 @@ wps_setup() {
 
 	wps_wp_install > $home/log/wps/wp-install.log 2>&1 & 			
 		
-	echo -ne "Installing WordPress..."
-	wps_wp_status() { cat $home/log/wps/wp-install.log 2>/dev/null | grep -q 'WordPress installed successfully'; }
-	while ! wps_wp_status true; do echo -n '.'; sleep 1; done; echo -ne " done.\n"
+	echo -ne "Initializing..."
+	while ! wps_wp_status true; do echo -n '.'; sleep 1; done
+	echo -ne " done.\n"
 	
 	# -----------------------------------------------------------------------------	
 

@@ -46,7 +46,7 @@ wps_build() {
 	# -----------------------------------------------------------------------------	
 	
 	mkdir -p /usr/local/adminer
-	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/adminer.php
+	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/index.php
 	
 	# COMPOSER
 	# -----------------------------------------------------------------------------	
@@ -70,19 +70,7 @@ wps_build() {
 	# -----------------------------------------------------------------------------	
 	
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
-	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
-	
-	mkdir -p $home/conf.d/nginx.d
-	mkdir -p $home/init.d
-	mkdir -p $home/log/nginx
-	mkdir -p $home/log/php
-	mkdir -p $home/log/wps
-	mkdir -p $home/log/smtp
-	mkdir -p $home/ssl
-	
-	cat /wps/etc/.profile > /root/.profile
-	cat /wps/etc/.profile > $home/.profile
-		
+	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers	
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 

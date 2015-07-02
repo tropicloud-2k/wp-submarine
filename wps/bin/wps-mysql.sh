@@ -2,14 +2,14 @@
 # DB CREATE
 # ---------------------------------------------------------------------------------
 
-wps_mysql_create() {
+mysql_create_link() {
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION"
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "FLUSH PRIVILEGES"
 }
 
-wps_mariadb_create() {
+wps_create_local() {
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
  	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION"
@@ -23,7 +23,7 @@ wps_mariadb_create() {
 # DB INSTALL
 # ---------------------------------------------------------------------------------
 
-wps_mysql_setup() {
+wps_mysql_install() {
 
 	wps_header "Installing MariaDB"
 	
@@ -32,7 +32,7 @@ wps_mysql_setup() {
 	rm -rf /var/lib/apt/lists/*
 	
 	sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf
-	cat /wps/etc/init.d/mariadb.ini > $home/init.d/mariadb.ini
+	mv $conf/supervisor/init.d/mariadb.txt $conf/supervisor/init.d/mariadb.ini
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
@@ -43,7 +43,7 @@ wps_mysql_setup() {
 	done && echo -ne " done.\n"
 	
 	echo -ne "Creating mysql database..."
-	while ! wps_mariadb_create true; do 
+	while ! wps_create_local true; do 
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 	

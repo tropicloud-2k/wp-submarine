@@ -7,9 +7,8 @@ wps_ssl() {
 	wps_header "Creating SSL cert."
 
 	if [[  ! -f $home/ssl/${HOSTNAME}.crt  ]]; then
-
 	
-		cd $home/ssl && rm -f $home/ssl/$HOSTNAME.*
+		cd $conf/certs
 		
 		cat /wps/etc/nginx/openssl.conf | sed -e "s/example.com/$HOSTNAME/g" > openssl.conf
 	

@@ -3,18 +3,11 @@
 # ---------------------------------------------------------------------------------
 
 wps_check() {
-	case "$HOSTNAME" in
- 		*.*) wps_true;;
- 		*) wps_false;;
- 	esac
+  	if [[  -z $VIRTUAL_HOST  ]];
+  	then wps_false
+  	else wps_true
+  	fi
 }
-
-# wps_check() {
-#  	if [[  -n $VIRTUAL_HOST  ]];
-#  	then wps_true
-#  	else wps_false
-#  	fi
-# }
 
 wps_true() {
 	if [[  -d $www  ]];
