@@ -32,7 +32,7 @@ wps_mysql_setup() {
 	rm -rf /var/lib/apt/lists/*
 	
 	sed -i 's/^\(bind-address\s.*\)/# \1/' /etc/mysql/my.cnf
-	cat /etc/wps/init.d/mariadb.ini > $home/init.d/mariadb.ini
+	cat /wps/etc/init.d/mariadb.ini > $home/init.d/mariadb.ini
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &

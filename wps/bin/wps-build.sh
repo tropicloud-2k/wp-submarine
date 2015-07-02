@@ -79,15 +79,14 @@ wps_build() {
 	mkdir -p $home/log/wps
 	mkdir -p $home/log/smtp
 	mkdir -p $home/ssl
+	mkdir -p $home/etc
 	
-	mv /wps/etc /etc/wps
-	mv /wps/bin /usr/local/wps
-	mv /wps/wps.sh /usr/local/bin/wps
-	chmod +x /usr/local/bin/wps
-
 	cat /etc/wps/.profile > /root/.profile
 	cat /etc/wps/.profile > $home/.profile
-	
+		
+	ln -s /wps/wps.sh /usr/local/bin/wps
+	chmod +x /usr/local/bin/wps
+
 	# -----------------------------------------------------------------------------	
 
 	wps_header "Done!"
