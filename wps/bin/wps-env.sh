@@ -43,10 +43,8 @@ wps_env() {
 		fi
 	fi
 		
-
 # ENV.
 # ---------------------------------------------------------------------------------
-
 
 	if [[  ! -z $MEMCACHED_PORT  ]];
 	then export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
@@ -86,10 +84,7 @@ wps_env() {
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
-
-# DUMP
-# ---------------------------------------------------------------------------------
-
+	
 	echo '' > $home/.env && env | grep = >> $home/.env
 
 	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps/install.log
