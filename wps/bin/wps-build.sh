@@ -72,17 +72,16 @@ wps_build() {
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 	
-	mkdir -p $home/conf.d
+	mkdir -p $home/conf.d/nginx.d
 	mkdir -p $home/init.d
 	mkdir -p $home/log/nginx
 	mkdir -p $home/log/php
 	mkdir -p $home/log/wps
 	mkdir -p $home/log/smtp
 	mkdir -p $home/ssl
-	mkdir -p $home/etc
 	
-	cat /etc/wps/.profile > /root/.profile
-	cat /etc/wps/.profile > $home/.profile
+	cat /wps/etc/.profile > /root/.profile
+	cat /wps/etc/.profile > $home/.profile
 		
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
