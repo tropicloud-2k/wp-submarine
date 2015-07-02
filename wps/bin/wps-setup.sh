@@ -13,7 +13,7 @@ wps_setup() {
 	find $conf -type f | xargs sed -i "s|example.com|$HOSTNAME|g"
 
 	if [[  ! -f $home/.env  ]]; then wps_env; fi
-	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql; fi
+	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_install; fi
 	if [[  $WP_SSL == 'true'  ]]; then wps_ssl && mv $conf/nginx/https.conf $conf/nginx/conf.d; fi
 
 	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
