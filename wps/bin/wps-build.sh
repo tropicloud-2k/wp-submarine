@@ -41,40 +41,34 @@ wps_build() {
 	                 
 	rm -rf /var/cache/apk/*
 	rm -rf /var/lib/apt/lists/*
-
 	
 	# ADMINER
 	# -----------------------------------------------------------------------------	
 	
 	mkdir -p /usr/local/adminer
 	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/adminer.php
-
 	
 	# COMPOSER
 	# -----------------------------------------------------------------------------	
 
 	curl -sS https://getcomposer.org/installer | php
 	mv composer.phar /usr/local/bin/composer
-
 	
 	# PREDIS
 	# -----------------------------------------------------------------------------	
 	
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
-
 	
 	# WP-CLI
 	# -----------------------------------------------------------------------------	
 
 	curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
-
 	
 	# WP-USER
 	# -----------------------------------------------------------------------------	
 	
-	chmod +x /wps/wps.sh && ln -s /wps/wps.sh /usr/bin/wps
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 	
@@ -86,9 +80,14 @@ wps_build() {
 	mkdir -p $home/log/smtp
 	mkdir -p $home/ssl
 	
-	cat /wps/etc/.profile > /root/.profile
-	cat /wps/etc/.profile > $home/.profile
-		
+	mv /wps/etc /etc/wps
+	mv /wps/bin /usr/local/wps
+	mv /wps/wps.sh /usr/local/bin/wps
+	chmod +x /usr/local/bin/wps
+
+	cat /etc/wps/.profile > /root/.profile
+	cat /etc/wps/.profile > $home/.profile
+	
 	# -----------------------------------------------------------------------------	
 
 	wps_header "Done!"

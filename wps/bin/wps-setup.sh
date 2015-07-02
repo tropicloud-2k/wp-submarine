@@ -7,7 +7,7 @@ wps_setup() {
 	# MSMTP
 	# ---------------------------------------------------------------------------------
 
-	cat /wps/etc/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
+	cat /etc/wps/smtp/msmtprc | sed -e "s/example.com/$HOSTNAME/g" > /etc/msmtprc
 	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
 # 	touch /var/log/msmtp.log
 # 	chmod 777 /var/log/msmtp.log
@@ -15,28 +15,28 @@ wps_setup() {
 	# NGINX
 	# ---------------------------------------------------------------------------------
 
-	cat /wps/etc/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
-	cat /wps/etc/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
+	cat /etc/wps/nginx/nginx.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/nginx.conf
+	cat /etc/wps/init.d/nginx.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/nginx.ini
 	
 	if [[  $WP_SSL == 'true'  ]];
-	then cat /wps/etc/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl
-	else cat /wps/etc/nginx/wp.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf
+	then cat /etc/wps/nginx/wpssl.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf && wps_ssl
+	else cat /etc/wps/nginx/wp.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/wordpress.conf
 	fi
 
 	# PHP-FPM
 	# ---------------------------------------------------------------------------------
 	
-	cat /wps/etc/init.d/php-fpm.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/php-fpm.ini
+	cat /etc/wps/init.d/php-fpm.ini | sed -e "s/example.com/$HOSTNAME/g" > $home/init.d/php-fpm.ini
 
 	if [[  $(free -m | grep 'Mem' | awk '{print $2}') -gt 1800  ]];
-	then cat /wps/etc/php/php-fpm.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
-	else cat /wps/etc/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
+	then cat /etc/wps/php/php-fpm.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
+	else cat /etc/wps/php/php-fpm-min.conf | sed -e "s/example.com/$HOSTNAME/g" > $home/conf.d/php-fpm.conf
 	fi
 
 	# SUPERVISOR
 	# -----------------------------------------------------------------------------	
 	
-	cat /wps/etc/supervisord.conf \
+	cat /etc/wps/supervisord.conf \
 	| sed -e "s/example.com/$HOSTNAME/g" \
 	| sed -e "s/WPS_PASSWORD/$WPS_PASSWORD/g" \
 	> $SUPERVISORD_CONF

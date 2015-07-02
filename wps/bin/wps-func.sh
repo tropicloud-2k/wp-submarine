@@ -104,5 +104,5 @@ wps_adminer() {
 	wps_header "Adminer (mysql admin)"
 
 	echo -e "  Password: $DB_PASSWORD\n"
-	php -S 0.0.0.0:8080 -t /usr/local/adminer
+	php -S 0.0.0.0:8888 -t /usr/local/adminer
 }

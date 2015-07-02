@@ -15,6 +15,7 @@ export home="/home/$user"
 export www="$home/www"
 export env="$home/.env"
 export web="$www/web"
+export wps="/usr/local/wps"
 
 if [[  -f $env  ]]; then
 for var in `cat $env`; do 
@@ -26,7 +27,7 @@ fi
 # FUNCTIONS
 # ---------------------------------------------------------------------------------
 
-for f in /wps/bin/*; do
+for f in $wps/*; do
 	. $f
 done
 
