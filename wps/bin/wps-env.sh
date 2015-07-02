@@ -8,6 +8,7 @@ wps_env() {
 
 		if [[  -z $MYSQL_PORT  ]]; then
 		
+			export WPS_MYSQL="127.0.0.1:3306"
 			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
 			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
 			export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
