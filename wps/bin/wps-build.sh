@@ -51,6 +51,10 @@ wps_build() {
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
 	
+	# MSMTP
+	ln -s $conf/smtp/msmtprc /etc/msmtprc
+	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
+	
 	# WP-CLI
 	curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
@@ -59,19 +63,13 @@ wps_build() {
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
 
 	cp -R /wps/usr/* $home
+
 	cp /wps/usr/.profile /root/.profile
 	cp /wps/usr/.profile $home/.profile
-
-	logs_dir="msmtp nginx php supervisor wps"
-	for d in $logs_dir; do mkdir -p $home/logs/$d; done	
 
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 
-	# MSMTP
-	ln -s $conf/smtp/msmtprc /etc/msmtprc
-	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
-	
 	wps_header "Done!"
 }
 

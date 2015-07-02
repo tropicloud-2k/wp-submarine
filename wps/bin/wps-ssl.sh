@@ -10,7 +10,7 @@ wps_ssl() {
 	
 		cd $conf/certs
 		
-		cat /wps/etc/nginx/openssl.conf | sed -e "s/example.com/$HOSTNAME/g" > openssl.conf
+		cat $conf/nginx/openssl.conf | sed -e "s/example.com/$HOSTNAME/g" > openssl.conf
 	
 		openssl req -nodes -sha256 -newkey rsa:2048 -keyout $HOSTNAME.key -out $HOSTNAME.csr -config openssl.conf -batch
 		openssl rsa -in $HOSTNAME.key -out $HOSTNAME.key

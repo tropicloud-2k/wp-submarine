@@ -2,15 +2,16 @@
 # DB CREATE
 # ---------------------------------------------------------------------------------
 
+mysql_wait() {
+
+	echo -ne "\nWaiting mysql server..."
+	while ! mysqladmin ping -h "$DB_HOST" --silent; do
+		echo -n '.' && sleep 1; 
+	done && echo -ne " done.\n"
+}
+
 mysql_create_link() {
-	
-	mysql_wait() {
-		echo -ne "\nWaiting mysql container..."
-		while ! mysqladmin ping -h "$DB_HOST" --silent; do
-			echo -n '.' && sleep 1; 
-		done && echo -ne " done.\n"
-	}
-	
+
 	mysql_wait
 	
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
@@ -20,6 +21,9 @@ mysql_create_link() {
 }
 
 mysql_create_local() {
+	
+	mysql_wait
+	
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
  	mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION"
@@ -45,11 +49,6 @@ wps_mysql_install() {
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
-	
-	echo -ne "Starting mysql server..."
-	while [[  ! -e /run/mysqld/mysqld.sock  ]]; do 
-		echo -n '.' && sleep 1; 
-	done && echo -ne " done.\n"
 	
 	echo -ne "Creating mysql database..."
 	while ! wps_create_local true; do 
