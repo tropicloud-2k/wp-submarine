@@ -5,7 +5,7 @@
 mysql_wait() {
 
 	echo -ne "\nWaiting mysql server..."
-	while ! mysqladmin ping -s -h "$DB_HOST"; do
+	while ! `mysqladmin ping -s -h "$DB_HOST"` true; do
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 }
