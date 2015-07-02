@@ -21,6 +21,7 @@ wps_wp_install() {
 		fi
 	else echo "`date +%Y-%m-%d\ %T` WordPress installed successfully." >> $home/logs/wps/wp-install.log
 	fi
+	exit 0;
 }
 
 wps_wp_status() {
