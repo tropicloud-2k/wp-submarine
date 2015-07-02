@@ -59,7 +59,7 @@ wps_build() {
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 	
-	cp -R /wps/usr/* $home
+	cp -R /wps/usr/*.* $home
 	cp $home/.profile /root/.profile
 
 	ln -s /wps/wps.sh /usr/local/bin/wps

@@ -3,7 +3,16 @@
 # ---------------------------------------------------------------------------------
 
 mysql_create_link() {
-	wps_mysql_wait
+	
+	mysql_wait() {
+		echo -ne "Waiting mysql container..."
+		while ! mysqladmin ping -h "$DB_HOST" --silent; do
+			echo -n '.' && sleep 1; 
+		done && echo -ne " done.\n"
+	}
+	
+	mysql_wait
+	
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION"
@@ -22,13 +31,6 @@ mysql_create_local() {
 
 # DB INSTALL
 # ---------------------------------------------------------------------------------
-
-wps_mysql_wait() {
-	echo -ne "Waiting mysql server..."
-	while ! mysqladmin ping -h "$DB_HOST" --silent; do
-		echo -n '.' && sleep 1; 
-	done && echo -ne " done.\n"
-}
 
 wps_mysql_install() {
 
