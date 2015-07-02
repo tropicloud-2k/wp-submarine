@@ -46,7 +46,7 @@ wps_links() {
 
 	if [[  ! $WPS_MYSQL == '127.0.0.1:3306'  ]];
 	then echo -e "\033[1;32m  •\033[0;37m MySQL\033[0m -> $WPS_MYSQL"
-	else echo -e "\033[1;31m  •\033[0;37m MySQL\033[0m (not linked)"
+	else echo -e "\033[1;33m  •\033[0;37m MySQL\033[0m (in container)"
 	fi	
 	
 	if [[  ! -z $WPS_REDIS  ]];
