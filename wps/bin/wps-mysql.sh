@@ -3,12 +3,10 @@
 # ---------------------------------------------------------------------------------
 
 wps_mysql_create() {
-	MYSQL="mysql -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST"
-	while ! `$MYSQL -e "SHOW STATUS"` true; do sleep 1; done
-	$MYSQL -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
- 	$MYSQL -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
- 	$MYSQL -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION"
-	$MYSQL -e "FLUSH PRIVILEGES"
+	mysql -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
+ 	mysql -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
+ 	mysql -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%' WITH GRANT OPTION"
+	mysql -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST -e "FLUSH PRIVILEGES"
 }
 
 wps_mariadb_create() {
