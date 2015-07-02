@@ -24,7 +24,7 @@ wps_setup() {
 
 	wps_wp_install > $home/logs/wps/wp-install.log 2>&1 & 			
 		
-	echo -ne "Initializing..."
+	echo -ne "Loading wordpress..."
 	while ! wps_wp_status true; do echo -n '.'; sleep 1; done
 	echo -ne " done.\n"
 	
