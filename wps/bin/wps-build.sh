@@ -57,11 +57,9 @@ wps_build() {
 	
 	# WP-SUBMARINE
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
-	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
-	
-	cp -R /wps/usr/*.* $home
-	cp $home/.profile /root/.profile
-
+	cp -R /wps/usr/* $home
+	cp /wps/usr/.profile /root/.profile
+	cp /wps/usr/.profile $home/.profile
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 
