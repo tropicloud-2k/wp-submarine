@@ -51,17 +51,17 @@ wps_header() {
 
 wps_links() {
 
-	if [[  -n $WPS_MYSQL  ]];
+	if [[  ! -z $WPS_MYSQL  ]];
 	then echo -e "\033[1;32m  •\033[0;37m MySQL\033[0m -> `echo $WPS_MYSQL`"
 	else echo -e "\033[1;31m  •\033[0;37m MySQL\033[0m (not linked)"
 	fi	
 
-	if [[  -n $WPS_REDIS  ]];
+	if [[  ! -z $WPS_REDIS  ]];
 	then echo -e "\033[1;32m  •\033[0;37m Redis\033[0m -> `echo $WPS_REDIS`"		
 	else echo -e "\033[1;31m  •\033[0;37m Redis\033[0m (not linked)"
 	fi		
 
-	if [[  -n $WPS_MEMCACHED  ]];
+	if [[  ! -z $WPS_MEMCACHED  ]];
 	then echo -e "\033[1;32m  •\033[0;37m Memcached\033[0m -> `echo $WPS_MEMCACHED`"
 	else echo -e "\033[1;31m  •\033[0;37m Memcached\033[0m (not linked)"
 	fi

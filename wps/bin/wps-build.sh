@@ -47,7 +47,7 @@ wps_build() {
 	# -----------------------------------------------------------------------------	
 	
 	mkdir -p /usr/local/adminer
-	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/index.php
+	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/adminer.php
 
 	
 	# COMPOSER
