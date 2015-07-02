@@ -60,6 +60,7 @@ wps_build() {
 	cp -R /wps/usr/* $home
 	cp /wps/usr/.profile /root/.profile
 	cp /wps/usr/.profile $home/.profile
+	mkdir -p $home/logs/wps
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 
