@@ -5,7 +5,7 @@
 mysql_wait() {
 
 	echo -ne "\nWaiting mysql server..."
-	while ! mysqladmin ping -s -h "$DB_HOST"; do
+	while ! mysqladmin ping -s -h "$DB_HOST" > /dev/null 2>&1; do
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 }
@@ -49,7 +49,7 @@ wps_mysql_install() {
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
-	mysql_create_local 2>/dev/null
+	mysql_create_local 
 	mysqladmin -u root shutdown
 	
 	# -----------------------------------------------------------------------------	
