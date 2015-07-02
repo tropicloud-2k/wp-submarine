@@ -49,12 +49,7 @@ wps_mysql_install() {
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
-	
-	echo -ne "Creating mysql database..."
-	while ! mysql_create_local true; do 
-		echo -n '.' && sleep 1; 
-	done && echo -ne " done.\n"
-	
+	mysql_create_local
 	mysqladmin -u root shutdown
 	
 	# -----------------------------------------------------------------------------	
