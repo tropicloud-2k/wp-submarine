@@ -12,11 +12,10 @@ wps_start() {
 	wps_links && echo ""
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF start $PROG
-	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
+		supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL start $PROG
+	else wps_chmod && exec supervisord -n -c $WPS_CTL
 	fi
 }
-
 
 # STOP
 # ---------------------------------------------------------------------------------
@@ -28,7 +27,7 @@ wps_stop() {
 	wps_header "Stopping $PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF stop $PROG		
+		supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL stop $PROG		
 	fi
 	echo ""
 }
@@ -44,8 +43,8 @@ wps_restart() {
 	wps_header "Restarting $PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF restart $PROG
-	else wps_chmod && exec supervisord -n -c $SUPERVISORD_CONF
+		supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL restart $PROG
+	else wps_chmod && exec supervisord -n -c $WPS_CTL
 	fi
 	echo ""
 }
@@ -59,7 +58,7 @@ wps_reload() {
 	wps_header "Reloading supervisord"
 
 	if [[  -f /tmp/supervisord.pid  ]];
-	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF reload
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL reload
 	fi
 	echo ""
 }
@@ -73,7 +72,7 @@ wps_shutdown() {
 	wps_header "Shutting down!"
 
 	if [[  -f /tmp/supervisord.pid  ]];
-	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF shutdown
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL shutdown
 	fi
 	echo ""
 }
@@ -89,8 +88,8 @@ wps_status() {
 	if [[  -f /tmp/supervisord.pid  ]]; then
 	
 		if [[  -z $2  ]];
-		then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF status all
-		else supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF status $2
+		then supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL status all
+		else supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL status $2
 		fi
 	
 	fi
@@ -106,7 +105,7 @@ wps_log() {
 	wps_header "Log"
 	
 	if [[  -f /tmp/supervisord.pid  ]];
-	then supervisorctl -u $user -p $WPS_PASSWORD -c $SUPERVISORD_CONF maintail
+	then supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL maintail
 	fi
 	echo ""
 }

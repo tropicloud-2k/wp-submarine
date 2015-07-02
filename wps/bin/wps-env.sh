@@ -65,7 +65,7 @@ wps_env() {
 	
 	export WP_SITEURL="${WP_HOME}/wp"
 	export WPS_PASSWORD="`openssl rand 12 -hex`"
-	export SUPERVISORD_CONF="$conf/supervisor/supervisord.conf"
+	export WPS_CTL="$conf/supervisor/supervisord.conf"
 	export HOME="/home/wordpress"
 	export VISUAL="nano"
 	
