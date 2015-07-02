@@ -23,7 +23,10 @@ wps_wp_install() {
 	fi
 }
 
-wps_wp_status() { cat $home/logs/wps/wp-install.log 2>/dev/null | grep -q 'WordPress installed successfully'; }
+wps_wp_status() {
+
+	cat $home/logs/wps/wp-install.log 2>/dev/null | grep -q 'WordPress installed successfully'
+}
 
 
 # WP PLUGINS
