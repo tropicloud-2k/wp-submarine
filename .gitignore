@@ -11,9 +11,8 @@
 *.o
 *.so
  
-# Logs and databases #
+# Databases #
 ######################
-*.log
 *.sql
 *.sqlite
  
