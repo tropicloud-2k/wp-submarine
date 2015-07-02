@@ -4,7 +4,7 @@ wps_setup() {
 	# ENV.
 	# ---------------------------------------------------------------------------------
 
-	cp -R /wps/usr/* $home && find $conf -type f | xargs sed -i "s|example.com|$HOSTNAME|g"
+	find $conf -type f | xargs sed -i "s|example.com|$HOSTNAME|g"
 
 	if [[  ! -f $home/.env  ]];
 	then wps_env
