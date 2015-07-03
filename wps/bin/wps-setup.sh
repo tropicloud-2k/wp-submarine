@@ -27,10 +27,10 @@ wps_setup() {
 	su -l $user -c "cd $www && composer install"
 	ln -s $home/.env $www/.env
 
-	wps_wp_install > $home/logs/wps/wp-install.log 2>&1 & 			
+	wps_wp_install > $home/logs/wps/install.log 2>&1 & 			
 		
 	echo -ne "Loading WordPress..."
-	while ! wps_wp_status true; do 
+	while ! wps_wp_status; do 
 		echo -n '.'; sleep 1
 	done && echo -ne " done.\n"
 	
@@ -39,5 +39,5 @@ wps_setup() {
 	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
 	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 
-	echo -e "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps/install.log	
+	echo -e "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps/setup.log	
 }

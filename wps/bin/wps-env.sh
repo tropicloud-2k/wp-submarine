@@ -87,5 +87,5 @@ wps_env() {
 	
 	echo '' > $home/.env && env | grep = >> $home/.env
 
-	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps/install.log
+	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps/setup.log
 }
