@@ -15,7 +15,7 @@ wps_wp_install() {
 	if [[  -n "$WP_TITLE" && -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
 		if [[  -z $MYSQL_PORT  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
-			while [[  ! -e /run/mysqld/mysqld.sock  ]]; do sleep 1; done && wps_wp_core			
+			mysql_wait && wps_wp_core			
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
