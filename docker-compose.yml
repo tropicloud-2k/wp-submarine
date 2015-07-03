@@ -1,10 +1,10 @@
-data:
+wps_data:
   build: . 
   volumes:
     - /home/wordpress
     - /var/ssl:/home/wordpress/conf/certs
   command: /bin/true
-web:
+wps_web:
   build: . 
   links:
     - mysql
@@ -13,18 +13,18 @@ web:
   env_file: .env
   volumes_from:
     - data
-nginx:
-  image: jwilder/nginx-proxy
+wps_proxy:
+  image: jwilder/nginx-proxy:0.3.6
   ports:
     - "80:80"
     - "443:443"
   volumes:
     - /var/ssl:/etc/nginx/certs
     - /var/run/docker.sock:/tmp/docker.sock:ro
-mysql:
-  image: mariadb
+wps_mysql:
+  image: mariadb:10.1.3
   env_file: .env
-redis:
-  image: redis
-memcached:
-  image: memcached
+wps_redis:
+  image: redis:3.0.2
+wps_cache:
+  image: memcached:1.4.24
