@@ -11,7 +11,7 @@ wps-web:
     - wps-redis
     - wps-cache
   env-file: .env
-  volumes-from:
+  volumes_from:
     - wps-data
 wps-proxy:
   image: jwilder/nginx-proxy:0.3.6
@@ -23,7 +23,7 @@ wps-proxy:
     - /var/run/docker.sock:/tmp/docker.sock:ro
 wps-mysql:
   image: mariadb:10.1.3
-  env-file: .env
+  env_file: .env
 wps-redis:
   image: redis:3.0.2
 wps-cache:
