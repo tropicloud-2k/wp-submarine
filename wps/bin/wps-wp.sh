@@ -2,16 +2,6 @@
 # WP INSTALL
 # ---------------------------------------------------------------------------------
 
-wps_wp_ready() { grep -q '(wp)Submarine' $home/logs/wps/install.log; }
-
-wps_wp_core() {
-
-	cd $web	
-	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
-	wp rewrite structure '/%postname%/'
-	wps_wp_plugins
-}
-
 wps_wp_install() {
 		
 	if [[  -n "$WP_TITLE" && -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
@@ -24,6 +14,16 @@ wps_wp_install() {
 	else echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps/install.log
 	fi
 }
+
+wps_wp_core() {
+
+	cd $web	
+	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
+	wp rewrite structure '/%postname%/'
+	wps_wp_plugins
+}
+
+wps_wp_ready() { grep -q '(wp)Submarine' $home/logs/wps/install.log 2>/dev/null; }
 
 
 # WP PLUGINS
