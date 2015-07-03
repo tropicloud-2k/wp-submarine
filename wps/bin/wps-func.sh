@@ -79,11 +79,10 @@ wps_version(){
 
 wps_chmod() { 
 
-	chown -R $user:nginx $home
-		
-	find $home -type f -exec chmod 644 {} \;
-	find $home -type d -exec chmod 755 {} \;
+	sudo chown -R $user:nginx $home
 	
+	sudo find $home -type f -exec chmod 644 {} \;
+	sudo find $home -type d -exec chmod 755 {} \;
 }
 
 # ADMINER
