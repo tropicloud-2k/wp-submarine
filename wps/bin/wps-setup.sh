@@ -30,8 +30,8 @@ wps_setup() {
 	wps_wp_install > $home/logs/wps/install.log 2>&1 &; PID=$!
 		
 	echo -ne "Loading environment..."
-	while `ps -p $pid > /dev/null 2>&1`; do 
-		echo -n '.'; sleep 1
+	while `ps -p $pid > /dev/null` true; do 
+		echo -n '.'; sleep 1;
 	done && echo -ne " done.\n"
 	
 	# -----------------------------------------------------------------------------	
