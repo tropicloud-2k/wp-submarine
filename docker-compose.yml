@@ -3,16 +3,16 @@ wps_data:
   volumes:
     - /home/wordpress
     - /var/ssl:/home/wordpress/conf/certs
-  command: /bin/true
+  command: true
 wps_web:
   build: . 
   links:
-    - mysql
-    - redis
-    - memcached
+    - wps_mysql
+    - wps_redis
+    - wps_cache
   env_file: .env
   volumes_from:
-    - data
+    - wps_data
 wps_proxy:
   image: jwilder/nginx-proxy:0.3.6
   ports:
