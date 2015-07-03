@@ -19,15 +19,12 @@ wps_wp_install() {
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
-	else echo "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps/install.log
+	else echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps/install.log
 	fi
 }
 
-# wps_wp_status() {
-# 
-# 	cat $home/logs/wps/install.log 2>/dev/null | grep -q 'WordPress installed successfully'
-# }
-# 
+wps_wp_ready() { grep -q '(wp)Submarine ready' $home/logs/wps/install.log }
+
 
 # WP PLUGINS
 # ---------------------------------------------------------------------------------
@@ -53,5 +50,6 @@ wps_wp_plugins() {
 		echo "define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));" >> $www/config/environments/production.php
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
+	echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps/install.log
 }
 

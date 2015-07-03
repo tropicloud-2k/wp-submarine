@@ -27,11 +27,10 @@ wps_setup() {
 	su -l $user -c "cd $www && composer install"
 	ln -s $home/.env $www/.env
 
-	wps_wp_install > $home/logs/wps/install.log 2>&1 &
-	PID=$!
+	wps_wp_install > $home/logs/wps/install.log 2>&1 & 			
 		
 	echo -ne "Loading environment..."
-	while `ps -p $pid > /dev/null` true; do 
+	while ! wps_wp_ready; do 
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 	
