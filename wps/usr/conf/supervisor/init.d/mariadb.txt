@@ -1,7 +1,14 @@
 [program:mariadb]
-
 command = /usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql --log-error=/home/wordpress/logs/mysql/error.log
-
-numprocs = 1
 autostart = true
 autorestart = true
+stdout_events_enabled = true
+stderr_events_enabled = true
+priority = 100
+numprocs = 1
+
+[program:mariadb-log]
+command=tail -f /home/wordpress/logs/mysql/error.log
+stdout_events_enabled=true
+stderr_events_enabled=true
+priority = 1100
