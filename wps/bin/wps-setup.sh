@@ -27,11 +27,11 @@ wps_setup() {
 	su -l $user -c "cd $www && composer install"
 	ln -s $home/.env $www/.env
 
-	wps_wp_install > $home/logs/wps/install.log 2>&1 & 			
+# 	wps_wp_install > $home/logs/wps/install.log 2>&1 &	
 		
 	echo -ne "Loading WordPress..."
-	while ! wps_wp_status; do 
-		echo -n '.'; sleep 1
+	while ! wps_wp_install > $home/logs/wps/install.log 2>&1; do 
+		echo -ne '.'; sleep 1
 	done && echo -ne " done.\n"
 	
 	# -----------------------------------------------------------------------------	

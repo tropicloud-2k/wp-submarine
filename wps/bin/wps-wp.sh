@@ -21,11 +21,18 @@ wps_wp_install() {
 		fi
 	else echo "`date +%Y-%m-%d\ %T` WordPress installed successfully." >> $home/logs/wps/install.log
 	fi
+	
+	if ! `grep -q 'WordPress installed successfully' $home/logs/wps/install.log` true;
+	then echo -e "\033[1;31m  Error installing WordPress!\n
+\033[0m  Check '/home/wordpress/logs/wps/install.log' for more details.
+\033[0m  Aborting...\n\n"
+		exit 1;
+	fi
 }
 
 wps_wp_status() {
 
-	cat $home/logs/wps/install.log 2>/dev/null | grep -q 'WordPress installed successfully'
+	cat $home/logs/wps/install.log 2>/dev/null | grep -q 'WordPress installed successfully' $home/logs/wps/install.log
 }
 
 
