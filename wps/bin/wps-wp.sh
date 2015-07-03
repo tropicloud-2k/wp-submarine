@@ -2,6 +2,8 @@
 # WP INSTALL
 # ---------------------------------------------------------------------------------
 
+wps_wp_ready() { grep -q '(wp)Submarine' $home/logs/wps/install.log; }
+
 wps_wp_core() {
 
 	cd $web	
@@ -22,8 +24,6 @@ wps_wp_install() {
 	else echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps/install.log
 	fi
 }
-
-wps_wp_ready() { grep -q '(wp)Submarine ready' $home/logs/wps/install.log }
 
 
 # WP PLUGINS
