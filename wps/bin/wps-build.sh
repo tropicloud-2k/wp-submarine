@@ -32,6 +32,7 @@ wps_build() {
 		php-xml \
 		php-zlib \
 		php-zip \
+		py-pip \
 		supervisor \
 		libmemcached \
 		bash curl git nano sudo
@@ -50,6 +51,9 @@ wps_build() {
 	# PREDIS
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
+	
+	# STDOUT
+	pip install supervisor-stdout
 	
 	# MSMTP
 	ln -s $conf/smtp/msmtprc /etc/msmtprc
