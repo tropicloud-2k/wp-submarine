@@ -10,7 +10,7 @@ wps-web:
     - wps-mysql
     - wps-redis
     - wps-cache
-  env-file: .env
+  env_file: .env
   volumes_from:
     - wps-data
 wps-proxy:
