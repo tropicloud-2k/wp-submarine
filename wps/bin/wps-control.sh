@@ -10,7 +10,6 @@ wps_start() {
 
 	wps_header "Starting $PROG"
 	wps_links && echo ""
-	wps_log_files
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
 		supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL start $PROG

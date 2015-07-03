@@ -52,7 +52,7 @@ wps_build() {
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
 	
-	# STDOUT
+	# LOGS (stdout)
 	pip install --upgrade pip
 	pip install supervisor-stdout
 	

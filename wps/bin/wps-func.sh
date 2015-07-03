@@ -79,6 +79,10 @@ wps_version(){
 
 wps_chmod() { 
 
+	if [[  ! -f "$home/logs/php/php-fpm.log"  ]];  then touch $home/logs/php/php-fpm.log; fi
+	if [[  ! -f "$home/logs/nginx/error.log"  ]];  then touch $home/logs/nginx/error.log; fi
+	if [[  ! -f "$home/logs/nginx/access.log"  ]]; then touch $home/logs/nginx/access.log; fi
+
 	sudo chown -R $user:nginx $home
 	
 	sudo find $home -type f -exec chmod 644 {} \;
@@ -94,13 +98,4 @@ wps_adminer() {
 
 	echo -e "  Password: $DB_PASSWORD\n"
 	php -S 0.0.0.0:8888 -t /usr/local/adminer
-}
-
-# ADMINER
-# ---------------------------------------------------------------------------------
-
-wps_log_files() {
-
-	if [[  ! -f "$home/logs/php/error.log"  ]]; then touch $home/logs/php/error.log; fi
-	if [[  ! -f "$home/logs/nginx/error.log"  ]]; then touch $home/logs/nginx/error.log; fi
 }
