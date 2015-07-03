@@ -53,6 +53,7 @@ wps_build() {
 	pear install nrk/Predis
 	
 	# STDOUT
+	pip install --upgrade pip
 	pip install supervisor-stdout
 	
 	# MSMTP

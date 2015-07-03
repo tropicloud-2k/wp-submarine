@@ -4,11 +4,11 @@ autostart = true
 autorestart = true
 stdout_events_enabled = true
 stderr_events_enabled = true
-priority = 100
+priority = 200
 numprocs = 1
 
 [program:mariadb-log]
 command=tail -f /home/wordpress/logs/mysql/error.log
 stdout_events_enabled=true
 stderr_events_enabled=true
-priority = 1100
+priority = 1200
