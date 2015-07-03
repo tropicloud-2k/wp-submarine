@@ -4,19 +4,19 @@
 
 wps_check() {
   	if [[  -z $VIRTUAL_HOST  ]];
-  	then wps_false
-  	else wps_true
+  	then wps_check_false
+  	else wps_check_true
   	fi
 }
 
-wps_true() {
+wps_check_true() {
 	if [[  -d $www  ]];
 	then /bin/true
 	else wps_setup
 	fi
 }
 
-wps_false() {
+wps_check_false() {
 	wps_header "[ERROR] Hostname is not set!"
 	echo -e "\033[1;31m  Use the -h flag to set the hostname (domain)
 or define it as an environment variable.\n
@@ -99,3 +99,11 @@ wps_adminer() {
 	echo -e "  Password: $DB_PASSWORD\n"
 	php -S 0.0.0.0:8888 -t /usr/local/adminer
 }
+
+# SHELL
+# ---------------------------------------------------------------------------------
+
+wps_true() { /bin/true; }
+wps_bash() { /bin/bash; }
+wps_sh()   { /bin/sh; }
+

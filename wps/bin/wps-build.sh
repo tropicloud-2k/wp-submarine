@@ -40,6 +40,10 @@ wps_build() {
 	rm -rf /var/cache/apk/*
 	rm -rf /var/lib/apt/lists/*
 	
+	# LOGS (stdout)
+	pip install --upgrade pip 2>/dev/null
+	pip install supervisor-stdout
+	
 	# ADMINER
 	mkdir -p /usr/local/adminer
 	curl -sL http://www.adminer.org/latest-en.php > /usr/local/adminer/index.php
@@ -51,10 +55,6 @@ wps_build() {
 	# PREDIS
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
-	
-	# LOGS (stdout)
-	pip install --upgrade pip 2>/dev/null
-	pip install supervisor-stdout
 	
 	# MSMTP
 	ln -s $conf/smtp/msmtprc /etc/msmtprc
