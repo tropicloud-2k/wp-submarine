@@ -19,22 +19,15 @@ wps_wp_install() {
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
-	else echo "`date +%Y-%m-%d\ %T` WordPress installed successfully." >> $home/logs/wps/install.log
-	fi
-	
-	if ! `grep -q 'WordPress installed successfully' $home/logs/wps/install.log` true;
-	then echo -e "\033[1;31m  Error installing WordPress!\n
-\033[0m  Check '/home/wordpress/logs/wps/install.log' for more details.
-\033[0m  Aborting...\n\n"
-		exit 1;
+	else echo "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps/install.log
 	fi
 }
 
-wps_wp_status() {
-
-	cat $home/logs/wps/install.log 2>/dev/null | grep -q 'WordPress installed successfully' $home/logs/wps/install.log
-}
-
+# wps_wp_status() {
+# 
+# 	cat $home/logs/wps/install.log 2>/dev/null | grep -q 'WordPress installed successfully'
+# }
+# 
 
 # WP PLUGINS
 # ---------------------------------------------------------------------------------
