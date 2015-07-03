@@ -2,7 +2,7 @@ data:
   build: . 
   volumes:
     - /home/wordpress
-    - /var/ssl:/home/wordpress/ssl
+    - /var/ssl:/home/wordpress/conf/certs
   command: /bin/true
 web:
   build: . 
@@ -19,7 +19,7 @@ nginx:
     - "80:80"
     - "443:443"
   volumes:
-    - /var/ssl:/home/wordpress/ssl
+    - /var/ssl:/etc/nginx/certs
     - /var/run/docker.sock:/tmp/docker.sock:ro
 mysql:
   image: mariadb
