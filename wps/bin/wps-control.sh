@@ -13,7 +13,7 @@ wps_start() {
 	
 	if [[  -f /tmp/supervisord.pid  ]]; then
 		supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL start $PROG
-	else wps_chmod & && exec supervisord -n -c $WPS_CTL
+	else wps_chmod && exec supervisord -n -c $WPS_CTL
 	fi
 }
 
@@ -43,8 +43,8 @@ wps_restart() {
 	wps_header "Restarting $PROG"
 
 	if [[  -f /tmp/supervisord.pid  ]]; then
-		wps_chmod & && supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL restart $PROG
-	else wps_chmod & && exec supervisord -n -c $WPS_CTL
+		wps_chmod && supervisorctl -u $user -p $WPS_PASSWORD -c $WPS_CTL restart $PROG
+	else wps_chmod && exec supervisord -n -c $WPS_CTL
 	fi
 	echo ""
 }
