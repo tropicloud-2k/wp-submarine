@@ -2,7 +2,6 @@ data:
   build: . 
   volumes:
     - /home/wordpress
-    - /var/ssl:/home/wordpress/conf/certs
   command: true
 app:
   build: . 
@@ -13,6 +12,8 @@ app:
   env_file: .env
   volumes_from:
     - data
+  volumes:
+    - /home/wordpress/conf/certs
 proxy:
   image: jwilder/nginx-proxy:0.3.6
   ports:
@@ -23,8 +24,11 @@ proxy:
     - /var/run/docker.sock:/tmp/docker.sock:ro
 mysql:
   image: mariadb:10.1.3
-  env_file: .env
+  environment:
+    - MYSQL_ROOT_PASSWORD=development
 redis:
   image: redis:3.0.2
 cache:
   image: memcached:1.4.24
+
+
