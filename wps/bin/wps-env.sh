@@ -14,7 +14,7 @@ wps_env() {
 			export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
 			export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16`
 			export DB_PASSWORD=`openssl rand -hex 12`
-			export DB_PREFIX=wps_`openssl rand -hex 3`_
+			export DB_PREFIX=`openssl rand -hex 3`_
 		
 		elif [[  -n $MYSQL_PORT  ]]; then 
 			
