@@ -43,7 +43,7 @@ wps_env() {
 		fi
 	fi
 		
-# ENV.
+# LINKS
 # ---------------------------------------------------------------------------------
 
 	if [[  ! -z $MEMCACHED_PORT  ]];
@@ -58,15 +58,21 @@ wps_env() {
 	     export WP_REDIS_PORT="`echo $WPS_REDIS | cut -d: -f2`"
 	fi
 	
+# WORDPRESS
+# ---------------------------------------------------------------------------------
+
+	if [[  -z $WP_TITLE  ]];
+	then export WP_TITLE="Just another awesome (wp)Submarine site."
+	fi
+	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
 	fi
 	
-	export WP_SITEURL="${WP_HOME}/wp"
-	export WPS_PASSWORD="`openssl rand 12 -hex`"
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
-	export HOME="/home/wordpress"
+	export WPS_PASSWORD="`openssl rand 12 -hex`"
+	export WP_SITEURL="${WP_HOME}/wp"
 	export VISUAL="nano"
 	
 	export AUTH_KEY="`openssl rand 48 -base64`"
@@ -78,22 +84,17 @@ wps_env() {
 	export LOGGED_IN_SALT="`openssl rand 48 -base64`"
 	export NONCE_SALT="`openssl rand 48 -base64`"
 	
-	if [[  -z $WP_TITLE  ]];
-	then export WP_TITLE="Just another awesome (wp)Submarine site."
-	fi
-	
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
 # DUMP
 # ---------------------------------------------------------------------------------
 	
-	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
-	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
-	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
-	echo -e "export HOME=/root" >> /root/.profile
-	echo -e ". $env" >> /root/.profile
-	echo -e ". $env" >> $home/.profile
+	echo -e "set \$DB_HOST $DB_HOST;"  >> $home/.adminer
+	echo -e "set \$DB_NAME $DB_NAME;"  >> $home/.adminer
+	echo -e "set \$DB_USER $DB_USER;"  >> $home/.adminer
+	echo -e ". $env\nexport HOME=$home" > $home/.profile
+	echo -e ". $env\nexport HOME=/root" > /root/.profile
 	
 	env | grep = >> $home/.env
 

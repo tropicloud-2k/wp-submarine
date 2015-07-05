@@ -32,17 +32,12 @@ wps_build() {
 		php-xml \
 		php-zlib \
 		php-zip \
-		py-pip \
 		supervisor \
 		libmemcached \
 		bash curl git nano sudo
 	                 
 	rm -rf /var/cache/apk/*
 	rm -rf /var/lib/apt/lists/*
-	
-	# LOGS (stdout)
-	pip install --upgrade pip 2>/dev/null
-	pip install supervisor-stdout
 	
 	# ADMINER
 	mkdir -p /usr/local/adminer
@@ -55,11 +50,7 @@ wps_build() {
 	# PREDIS
 	pear channel-discover pear.nrk.io
 	pear install nrk/Predis
-	
-	# MSMTP
-	ln -s $conf/smtp/msmtprc /etc/msmtprc
-	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
-	
+		
 	# WP-CLI
 	curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /usr/local/bin/wp
 	chmod +x /usr/local/bin/wp
@@ -74,6 +65,10 @@ wps_build() {
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 
+	# MSMTP
+	ln -s $conf/smtp/msmtprc /etc/msmtprc
+	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
+	
 	wps_header "Done!"
 }
 
