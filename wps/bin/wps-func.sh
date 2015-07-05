@@ -3,10 +3,25 @@
 # ---------------------------------------------------------------------------------
 
 wps_check() {
+  	if [[  -z $WP_DOMAIN  ]];
+  	then wps_check_false
+  	else wps_check_true
+  	fi
+}
+
+wps_check_true() {
 	if [[  -d $www  ]];
 	then /bin/true
 	else wps_setup
 	fi
+}
+
+wps_check_false() {
+	wps_header "[ERROR] WP_DOMAIN is not set!"
+	echo -e "\033[1;31m  Pleae define WP_DOMAIN as an environment variable.\n
+\033[0m  docker run -P -e WP_DOMAIN=\"example.com\" -d tropicloud/wp-submarine \n
+\033[0m  Aborting script...\n\n"
+	exit 1;
 }
 
 
