@@ -7,9 +7,10 @@ for var in `cat $env`; do
 	val=`echo $var | cut -d= -f2`
 	
 	case $key in
-		*-*) /bin/false;;
-		*.*) /bin/false;;
+		*-*) /bin/true;;
+		*.*) /bin/true;;
 		*) export $var;;
 	esac
 
 done
+select
