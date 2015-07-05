@@ -89,7 +89,14 @@ wps_env() {
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
 	
+# DUMP
+# ---------------------------------------------------------------------------------
+
+	find $conf -type f | xargs sed -i "s|example.com|$WP_DOMAIN|g"
+	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 	echo '' > $home/.env && env | grep = >> $home/.env
+
+# ---------------------------------------------------------------------------------
 
 	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps/setup.log
 }
