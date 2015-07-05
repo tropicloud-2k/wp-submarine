@@ -11,8 +11,8 @@ wps_env() {
 			export WPS_MYSQL="127.0.0.1:3306"
 			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
 			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
-			export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
-			export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16`
+			export DB_USER=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
+			export DB_NAME=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
 			export DB_PASSWORD=`openssl rand -hex 12`
 			export DB_PREFIX=`openssl rand -hex 3`_
 		
@@ -23,7 +23,7 @@ wps_env() {
 			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
 			
 			if [[  -z $MYSQL_ENV_MYSQL_USER  ]];
-			then export DB_USER=`echo ${HOSTNAME//./_} | cut -c 1-16`
+			then export DB_USER=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
 			else export DB_USER=$MYSQL_ENV_MYSQL_USER
 			fi
 
@@ -37,7 +37,7 @@ wps_env() {
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
-			then export DB_NAME=`echo ${HOSTNAME//./_} | cut -c 1-16` && mysql_create_link
+			then export DB_NAME=`echo ${WP_DOMAIN//./_} | cut -c 1-16` && mysql_create_link
 			else export DB_NAME=$MYSQL_ENV_MYSQL_NAME
 			fi						
 		fi
