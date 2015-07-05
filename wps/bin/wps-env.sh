@@ -1,5 +1,5 @@
 
-wps_env() {
+wps_env() { 
 
 # REDIS
 # ---------------------------------------------------------------------------------
@@ -64,6 +64,8 @@ wps_env() {
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
+	 # prevent WP_TITLE from break the environment
+	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
@@ -89,6 +91,8 @@ wps_env() {
 # DUMP
 # ---------------------------------------------------------------------------------
 	
+	unset WP_TITLE
+
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
@@ -97,8 +101,12 @@ wps_env() {
 	echo -e "source $env\nexport HOME=/root" > /root/.profile
 	
 	env | grep = >> $home/.env
+	
 
 # ---------------------------------------------------------------------------------
+
+	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
+	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 
 	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps_setup.log
 }

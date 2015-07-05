@@ -30,8 +30,5 @@ wps_setup() {
 	
 	# -----------------------------------------------------------------------------	
 
-	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
-	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
-
 	echo -e "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps_setup.log	
 }
