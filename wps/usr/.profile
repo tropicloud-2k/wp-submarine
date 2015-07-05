@@ -1,8 +1,15 @@
 
 env='/home/wordpress/.env'
 
-if [[  -f $env  ]]; then
 for var in `cat $env`; do 
-	export $var
+
+	key=`echo $var | cut -d= -f1`
+	val=`echo $var | cut -d= -f2`
+	
+	case $key in
+		*-*) /bin/false;;
+		*.*) /bin/false;;
+		*) export $var;;
+	esac
+
 done
-fi
