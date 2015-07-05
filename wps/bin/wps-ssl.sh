@@ -16,12 +16,9 @@ wps_ssl() {
 		openssl rsa -in $WP_DOMAIN.key -out $WP_DOMAIN.key
 		openssl x509 -req -days 365 -sha256 -in $WP_DOMAIN.csr -signkey $WP_DOMAIN.key -out $WP_DOMAIN.crt	
 	
+		mv $conf/nginx/https.conf $conf/nginx/conf.d
 		rm -f openssl.conf
 
 	else echo -e "Certificate already exists.\nSkipping..."
 	fi
-
-	# -----------------------------------------------------------------------------	
-
-	echo -e "`date +%Y-%m-%d\ %T` SSL setup completed." >> $home/logs/wps_setup.log	
 }

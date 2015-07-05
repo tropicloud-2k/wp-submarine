@@ -4,6 +4,8 @@
 
 wps_wp_install() {
 		
+	export WPS_INSTALL"wordpress"
+
 	if [[  -n "$WP_USER"  ]] && [[  -n "$WP_MAIL"  ]] && [[  -n "$WP_PASS"  ]]; then
 	
 		if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then
@@ -13,7 +15,7 @@ wps_wp_install() {
 		else wps_wp_core
 		fi
 		
-	else echo "`date +%Y-%m-%d\ %T` Submarine!" >> $home/logs/wps_install.log
+	else export WPS_INSTALL"completed"
 	fi
 }
 
@@ -26,9 +28,17 @@ wps_wp_core() {
 	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
 	wp rewrite structure '/%postname%/'
 	wps_wp_plugins
+	
+	export WPS_INSTALL"completed"
 }
 
-wps_wp_wait() { grep -q 'Submarine!' $home/logs/wps_install.log 2>/dev/null; }
+wps_wp_wait() {
+
+	echo -ne "Loading environment..."
+	while [[  ! $WPS_INSTALL == 'completed'  ]]; do
+		echo -n '.' && sleep 1
+	done && echo -ne " done.\n"
+}
 
 
 # WP PLUGINS
@@ -55,6 +65,5 @@ wps_wp_plugins() {
 		echo "define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));" >> $www/config/environments/production.php
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
-	echo "`date +%Y-%m-%d\ %T` Submarine!" >> $home/logs/wps_install.log
 }
 

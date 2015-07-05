@@ -55,7 +55,7 @@ wps_env() {
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
-			then export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`" && mysql_create_link
+			then export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`" && wps_mysql_link
 			else export DB_NAME="$MYSQL_ENV_MYSQL_NAME"
 			fi						
 		fi
@@ -64,8 +64,6 @@ wps_env() {
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
-	 # prevent WP_TITLE from break the environment
-	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
@@ -73,6 +71,7 @@ wps_env() {
 	
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
 	export WPS_PASSWORD="`openssl rand 12 -hex`"
+	export WPS_INSTALL"environment"
 	export WP_SITEURL="${WP_HOME}/wp"
 	export VISUAL="nano"
 	
@@ -101,12 +100,9 @@ wps_env() {
 	echo -e "source $env\nexport HOME=/root" > /root/.profile
 	
 	env | grep = >> $home/.env
-	
 
 # ---------------------------------------------------------------------------------
 
 	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
 	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
-
-	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps_setup.log
 }

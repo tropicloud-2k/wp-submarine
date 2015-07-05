@@ -10,9 +10,9 @@ mysql_wait() {
 	done && echo -ne " done.\n"
 }
 
-mysql_create_link() {
+wps_mysql_link() {
 
-	mysql_wait
+	mysql_wait && export WPS_INSTALL"mysql"
 	
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
@@ -20,9 +20,9 @@ mysql_create_link() {
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "FLUSH PRIVILEGES"
 }
 
-mysql_create_local() {
+wps_mysql_local() {
 	
-	mysql_wait
+	mysql_wait && export WPS_INSTALL"mysql"
 	
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
@@ -36,7 +36,7 @@ mysql_create_local() {
 # DB INSTALL
 # ---------------------------------------------------------------------------------
 
-wps_mysql_install() {
+wps_mysql() {
 
 	wps_header "Installing MariaDB"
 	
@@ -49,10 +49,6 @@ wps_mysql_install() {
 	
 	mysql_install_db --user=mysql > /dev/null 2>&1
 	mysqld_safe > /dev/null 2>&1 &
-	mysql_create_local 
+	wps_mysql_local
 	mysqladmin -u root shutdown
-	
-	# -----------------------------------------------------------------------------	
-
-	echo -e "`date +%Y-%m-%d\ %T` MySQL setup completed." >> $home/logs/wps_setup.log	
 }

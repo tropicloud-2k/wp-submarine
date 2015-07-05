@@ -7,8 +7,8 @@ wps_setup() {
 	find $conf -type f | xargs sed -i "s|example.com|$WP_DOMAIN|g"
 
 	if [[  ! -f $home/.env  ]]; then wps_env; fi
-	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_install; fi
-	if [[  $WP_SSL == 'true'  ]]; then wps_ssl && mv $conf/nginx/https.conf $conf/nginx/conf.d; fi
+	if [[  $WP_SSL == 'true'  ]]; then wps_ssl; fi
+	if [[  $WP_SQL == 'local'  ]]; then wps_mysql; fi
 
 	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 	
@@ -21,14 +21,6 @@ wps_setup() {
 	su -l $user -c "cd $www && composer install"
 	ln -s $home/.env $www/.env
 
-	wps_wp_install > $home/logs/wps_install.log 2>&1 & 			
-		
-	echo -ne "Loading environment..."
-	while ! wps_wp_wait; do 
-		echo -n '.' && sleep 1
-	done && echo -ne " done.\n"
-	
-	# -----------------------------------------------------------------------------	
-
-	echo -e "`date +%Y-%m-%d\ %T` WordPress setup completed." >> $home/logs/wps_setup.log	
+	wps_wp_install > $conf/submarine/wordpress.log 2>&1 &
+	wps_wp_wait			
 }

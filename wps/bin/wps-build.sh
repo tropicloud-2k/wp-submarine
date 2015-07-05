@@ -60,7 +60,7 @@ wps_build() {
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 
 	cp -R /wps/usr/* $home
-	mkdir -p $home/logs
+	mkdir -p $conf/submarine
 
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
