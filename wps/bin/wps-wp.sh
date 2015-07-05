@@ -4,14 +4,16 @@
 
 wps_wp_install() {
 		
-	if [[  -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
-		if [[  -z $MYSQL_PORT  ]]; then
+	if [[  -n "$WP_USER"  ]] && [[  -n "$WP_MAIL"  ]] && [[  -n "$WP_PASS"  ]]; then
+	
+		if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
 			mysql_wait && wps_wp_core			
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
-	else echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps_install.log
+		
+	else echo "`date +%Y-%m-%d\ %T` Submarine!" >> $home/logs/wps_install.log
 	fi
 }
 
@@ -19,14 +21,14 @@ wps_wp_core() {
 
 	cd $web
 	
-	WP_TITLE="Another awesome WordPress submarine"
+	WP_TITLE="Another awesome WordPress Submarine site"
 	
 	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
 	wp rewrite structure '/%postname%/'
 	wps_wp_plugins
 }
 
-wps_wp_ready() { grep -q '(wp)Submarine' $home/logs/wps_install.log 2>/dev/null; }
+wps_wp_ready() { grep -q 'Submarine!' $home/logs/wps_install.log 2>/dev/null; }
 
 
 # WP PLUGINS
