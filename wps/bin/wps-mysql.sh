@@ -54,5 +54,5 @@ wps_mysql_install() {
 	
 	# -----------------------------------------------------------------------------	
 
-	echo -e "`date +%Y-%m-%d\ %T` MySQL setup completed." >> $home/logs/wps/setup.log	
+	echo -e "`date +%Y-%m-%d\ %T` MySQL setup completed." >> $home/logs/wps_setup.log	
 }
