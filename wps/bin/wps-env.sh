@@ -91,11 +91,10 @@ wps_env() {
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
-
-	echo -e ". $env" > $home/.profile
-	echo -e ". $env" > /root/.profile
+	echo -e "export HOME=/root" >> /root/.profile
+	echo -e ". $env" >> /root/.profile
+	echo -e ". $env" >> $home/.profile
 	
-	echo '' > $home/.env
 	env | grep = >> $home/.env
 
 # ---------------------------------------------------------------------------------

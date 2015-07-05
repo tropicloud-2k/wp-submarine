@@ -70,10 +70,6 @@ wps_build() {
 
 	cp -R /wps/usr/* $home
 	mkdir -p $home/logs
-	
-	cp /wps/usr/.profile $home/.profile
-	cp /wps/usr/.profile /root/.profile
-	echo -e "export HOME=/root" >> /root/.profile
 
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
