@@ -28,7 +28,7 @@ wps_wp_core() {
 	wps_wp_plugins
 }
 
-wps_wp_ready() { grep -q 'Submarine!' $home/logs/wps_install.log 2>/dev/null; }
+wps_wp_wait() { grep -q 'Submarine!' $home/logs/wps_install.log 2>/dev/null; }
 
 
 # WP PLUGINS
@@ -55,6 +55,6 @@ wps_wp_plugins() {
 		echo "define('WP_REDIS_HOST', getenv('WP_REDIS_HOST'));" >> $www/config/environments/production.php
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
-	echo "`date +%Y-%m-%d\ %T` (wp)Submarine ready!" >> $home/logs/wps_install.log
+	echo "`date +%Y-%m-%d\ %T` Submarine!" >> $home/logs/wps_install.log
 }
 

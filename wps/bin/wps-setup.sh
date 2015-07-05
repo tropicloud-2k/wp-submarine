@@ -24,7 +24,7 @@ wps_setup() {
 	wps_wp_install > $home/logs/wps_install.log 2>&1 & 			
 		
 	echo -ne "Loading environment..."
-	while ! wps_wp_ready; do 
+	while ! wps_wp_wait; do 
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 	
