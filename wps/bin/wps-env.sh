@@ -33,12 +33,14 @@ wps_env() {
 			export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
 			export DB_PASSWORD="`openssl rand -hex 12`"
 			export DB_PREFIX="`openssl rand -hex 3`_"
+			export WP_SQL="local"
 		
 		elif [[  -n $MYSQL_PORT  ]]; then 
 			
 			export WPS_MYSQL="`echo $MYSQL_PORT | cut -d/ -f3`"
 			export DB_HOST="`echo $WPS_MYSQL | cut -d: -f1`"
 			export DB_PORT="`echo $WPS_MYSQL | cut -d: -f2`"
+			export WP_SQL="link"
 			
 			if [[  -z $MYSQL_ENV_MYSQL_USER  ]];
 			then export DB_USER="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
