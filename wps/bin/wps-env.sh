@@ -58,6 +58,10 @@ wps_env() {
 	     export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
 	fi
 	
+	if [[  -z $WP_DOMAIN  ]];
+	then export WP_DOMAIN="localhost"
+	fi
+	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"

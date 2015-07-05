@@ -3,27 +3,10 @@
 # ---------------------------------------------------------------------------------
 
 wps_check() {
-  	if [[  -z $WP_DOMAIN  ]];
-  	then wps_check_false
-  	else wps_check_true
-  	fi
-}
-
-wps_check_true() {
 	if [[  -d $www  ]];
 	then /bin/true
 	else wps_setup
 	fi
-}
-
-wps_check_false() {
-	wps_header "[ERROR] Hostname is not set!"
-	echo -e "\033[1;31m  Use the -h flag to set the hostname (domain)
-or define it as an environment variable.\n
-\033[0m  Ex: docker run -P -h example.com -d tropicloud/wp-micro
-\033[0m      docker run -P -e HOSTNAME=\"example.com\" -d tropicloud/wp-micro \n
-\033[0m  Aborting script...\n\n"
-	exit 1;
 }
 
 
