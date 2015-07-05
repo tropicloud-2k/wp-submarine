@@ -1,6 +1,24 @@
 
 wps_env() {
 
+# REDIS
+# ---------------------------------------------------------------------------------
+
+	if [[  ! -z $REDIS_PORT  ]];
+	then export WPS_REDIS="`echo $REDIS_PORT | cut -d/ -f3`"
+	     export WP_REDIS_HOST="`echo $WPS_REDIS | cut -d: -f1`"
+	     export WP_REDIS_PORT="`echo $WPS_REDIS | cut -d: -f2`"
+	fi
+	
+# MEMCACHED
+# ---------------------------------------------------------------------------------
+
+	if [[  ! -z $MEMCACHED_PORT  ]];
+	then export WPS_MEMCACHED="`echo $MEMCACHED_PORT | cut -d/ -f3`"
+	     export WP_MEMCACHED_HOST="`echo $WPS_MEMCACHED | cut -d: -f1`"
+	     export WP_MEMCACHED_PORT="`echo $WPS_MEMCACHED | cut -d: -f2`"
+	fi
+	
 # MYSQL 
 # ---------------------------------------------------------------------------------
 
@@ -43,28 +61,9 @@ wps_env() {
 		fi
 	fi
 		
-# LINKS
-# ---------------------------------------------------------------------------------
-
-	if [[  ! -z $MEMCACHED_PORT  ]];
-	then export WPS_MEMCACHED="`echo $MEMCACHED_PORT | cut -d/ -f3`"
-	     export WP_MEMCACHED_HOST="`echo $WPS_MEMCACHED | cut -d: -f1`"
-	     export WP_MEMCACHED_PORT="`echo $WPS_MEMCACHED | cut -d: -f2`"
-	fi
-	
-	if [[  ! -z $REDIS_PORT  ]];
-	then export WPS_REDIS="`echo $REDIS_PORT | cut -d/ -f3`"
-	     export WP_REDIS_HOST="`echo $WPS_REDIS | cut -d: -f1`"
-	     export WP_REDIS_PORT="`echo $WPS_REDIS | cut -d: -f2`"
-	fi
-	
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
-	if [[  -z $WP_TITLE  ]];
-	then export WP_TITLE="Just another awesome (wp)Submarine site."
-	fi
-	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
@@ -90,11 +89,12 @@ wps_env() {
 # DUMP
 # ---------------------------------------------------------------------------------
 	
-	echo -e "set \$DB_HOST $DB_HOST;"  >> $home/.adminer
-	echo -e "set \$DB_NAME $DB_NAME;"  >> $home/.adminer
-	echo -e "set \$DB_USER $DB_USER;"  >> $home/.adminer
-	echo -e ". $env\nexport HOME=$home" > $home/.profile
-	echo -e ". $env\nexport HOME=/root" > /root/.profile
+	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
+	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
+	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
+
+	echo -e "source $env\nexport HOME=$home" > $home/.profile
+	echo -e "source $env\nexport HOME=/root" > /root/.profile
 	
 	env | grep = >> $home/.env
 

@@ -4,7 +4,7 @@
 
 wps_wp_install() {
 		
-	if [[  -n "$WP_TITLE" && -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
+	if [[  -n "$WP_USER" && -n "$WP_MAIL" && -n "$WP_PASS"  ]]; then
 		if [[  -z $MYSQL_PORT  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
 			mysql_wait && wps_wp_core			
@@ -17,7 +17,10 @@ wps_wp_install() {
 
 wps_wp_core() {
 
-	cd $web	
+	cd $web
+	
+	WP_TITLE="Another awesome WordPress submarine"
+	
 	wp core install --url=$WP_HOME --title=$WP_TITLE --admin_name=$WP_USER --admin_email=$WP_MAIL --admin_password=$WP_PASS
 	wp rewrite structure '/%postname%/'
 	wps_wp_plugins
