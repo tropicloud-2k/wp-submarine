@@ -6,11 +6,15 @@ for var in `cat $env`; do
 	key=`echo $var | cut -d= -f1`
 	val=`echo $var | cut -d= -f2`
 	
-	case $key in
-		*-*) /bin/true;;
-		*.*) /bin/true;;
-		*) export $var;;
-	esac
-
+	if [[  $key == *'-'*  ]]; then /bin/true
+	elif [[  $key == *'.'*  ]]; then /bin/true
+	else export "$key"="$val"
+	fi
+	
+# 	case $key in
+# 		*-*) /bin/false;;
+# 		*.*) /bin/false;;
+# 		*) export "$key"="$val";;
+# 	esac
+	
 done
-select

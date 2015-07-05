@@ -9,36 +9,36 @@ wps_env() {
 		if [[  -z $MYSQL_PORT  ]]; then
 		
 			export WPS_MYSQL="127.0.0.1:3306"
-			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
-			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
-			export DB_USER=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
-			export DB_NAME=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
-			export DB_PASSWORD=`openssl rand -hex 12`
-			export DB_PREFIX=`openssl rand -hex 3`_
+			export DB_HOST="`echo $WPS_MYSQL | cut -d: -f1`"
+			export DB_PORT="`echo $WPS_MYSQL | cut -d: -f2`"
+			export DB_USER="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
+			export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
+			export DB_PASSWORD="`openssl rand -hex 12`"
+			export DB_PREFIX="`openssl rand -hex 3`_"
 		
 		elif [[  -n $MYSQL_PORT  ]]; then 
 			
-			export WPS_MYSQL=`echo $MYSQL_PORT | cut -d/ -f3`
-			export DB_HOST=`echo $WPS_MYSQL | cut -d: -f1`
-			export DB_PORT=`echo $WPS_MYSQL | cut -d: -f2`
+			export WPS_MYSQL="`echo $MYSQL_PORT | cut -d/ -f3`"
+			export DB_HOST="`echo $WPS_MYSQL | cut -d: -f1`"
+			export DB_PORT="`echo $WPS_MYSQL | cut -d: -f2`"
 			
 			if [[  -z $MYSQL_ENV_MYSQL_USER  ]];
-			then export DB_USER=`echo ${WP_DOMAIN//./_} | cut -c 1-16`
-			else export DB_USER=$MYSQL_ENV_MYSQL_USER
+			then export DB_USER="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
+			else export DB_USER="$MYSQL_ENV_MYSQL_USER"
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_PASSWORD  ]];
-			then export DB_PASSWORD=`openssl rand -hex 12`
-			else export DB_PASSWORD=$MYSQL_ENV_MYSQL_PASSWORD
+			then export DB_PASSWORD="`openssl rand -hex 12`"
+			else export DB_PASSWORD="$MYSQL_ENV_MYSQL_PASSWORD"
 			fi
 			
 			if [[  -z $DB_PREFIX  ]];
-			then export DB_PREFIX=wps_`openssl rand -hex 3`_
+			then export DB_PREFIX="wps_`openssl rand -hex 3`_"
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
-			then export DB_NAME=`echo ${WP_DOMAIN//./_} | cut -c 1-16` && mysql_create_link
-			else export DB_NAME=$MYSQL_ENV_MYSQL_NAME
+			then export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`" && mysql_create_link
+			else export DB_NAME="$MYSQL_ENV_MYSQL_NAME"
 			fi						
 		fi
 	fi
@@ -47,20 +47,24 @@ wps_env() {
 # ---------------------------------------------------------------------------------
 
 	if [[  ! -z $MEMCACHED_PORT  ]];
-	then export WPS_MEMCACHED=`echo $MEMCACHED_PORT | cut -d/ -f3`
-	     export WP_MEMCACHED_HOST=`echo $WPS_MEMCACHED | cut -d: -f1`
-	     export WP_MEMCACHED_PORT=`echo $WPS_MEMCACHED | cut -d: -f2`
+	then export WPS_MEMCACHED="`echo $MEMCACHED_PORT | cut -d/ -f3`"
+	     export WP_MEMCACHED_HOST="`echo $WPS_MEMCACHED | cut -d: -f1`"
+	     export WP_MEMCACHED_PORT="`echo $WPS_MEMCACHED | cut -d: -f2`"
 	fi
 	
 	if [[  ! -z $REDIS_PORT  ]];
-	then export WPS_REDIS=`echo $REDIS_PORT | cut -d/ -f3`
-	     export WP_REDIS_HOST=`echo $WPS_REDIS | cut -d: -f1`
-	     export WP_REDIS_PORT=`echo $WPS_REDIS | cut -d: -f2`
+	then export WPS_REDIS="`echo $REDIS_PORT | cut -d/ -f3`"
+	     export WP_REDIS_HOST="`echo $WPS_REDIS | cut -d: -f1`"
+	     export WP_REDIS_PORT="`echo $WPS_REDIS | cut -d: -f2`"
 	fi
 	
 	if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
+	fi
+	
+	if [[  -z $WP_TITLE  ]];
+	then export WP_TITLE="Just another awesome (wp)Submarine site."
 	fi
 	
 	export WP_SITEURL="${WP_HOME}/wp"
