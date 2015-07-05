@@ -33,7 +33,7 @@ wps_env() {
 			fi
 			
 			if [[  -z $DB_PREFIX  ]];
-			then export DB_PREFIX="wps_`openssl rand -hex 3`_"
+			then export DB_PREFIX="`openssl rand -hex 3`_"
 			fi
 
 			if [[  -z $MYSQL_ENV_MYSQL_NAME  ]];
@@ -63,10 +63,6 @@ wps_env() {
 	else export WP_HOME="http://${WP_DOMAIN}"
 	fi
 	
-	if [[  -z $WP_TITLE  ]];
-	then export WP_TITLE="Just another awesome (wp)Submarine site."
-	fi
-	
 	export WP_SITEURL="${WP_HOME}/wp"
 	export WPS_PASSWORD="`openssl rand 12 -hex`"
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
@@ -81,15 +77,28 @@ wps_env() {
 	export SECURE_AUTH_SALT="`openssl rand 48 -base64`"
 	export LOGGED_IN_SALT="`openssl rand 48 -base64`"
 	export NONCE_SALT="`openssl rand 48 -base64`"
-
+	
+	if [[  -z $WP_TITLE  ]];
+	then export WP_TITLE="Just another awesome (wp)Submarine site."
+	fi
+	
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
+# DUMP
+# ---------------------------------------------------------------------------------
+	
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
+
+	echo -e ". $env" > $home/.profile
+	echo -e ". $env" > /root/.profile
 	
-	echo '' > $home/.env && env | grep = >> $home/.env
+	echo '' > $home/.env
+	env | grep = >> $home/.env
+
+# ---------------------------------------------------------------------------------
 
 	echo -e "`date +%Y-%m-%d\ %T` Environment setup completed." >> $home/logs/wps_setup.log
 }
