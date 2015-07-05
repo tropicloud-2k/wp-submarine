@@ -59,8 +59,8 @@ wps_env() {
 	fi
 	
 	if [[  $WP_SSL == 'true'  ]];
-	then export WP_HOME="https://${HOSTNAME}"
-	else export WP_HOME="http://${HOSTNAME}"
+	then export WP_HOME="https://${WP_DOMAIN}"
+	else export WP_HOME="http://${WP_DOMAIN}"
 	fi
 	
 	export WP_SITEURL="${WP_HOME}/wp"

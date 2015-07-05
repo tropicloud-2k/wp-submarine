@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------------
 
 wps_check() {
-  	if [[  -z $VIRTUAL_HOST  ]];
+  	if [[  -z $WP_DOMAIN  ]];
   	then wps_check_false
   	else wps_check_true
   	fi
@@ -99,11 +99,3 @@ wps_adminer() {
 	echo -e "  Password: $DB_PASSWORD\n"
 	php -S 0.0.0.0:8888 -t /usr/local/adminer
 }
-
-# SHELL
-# ---------------------------------------------------------------------------------
-
-wps_true() { /bin/true; }
-wps_bash() { /bin/bash; }
-wps_sh()   { /bin/sh; }
-

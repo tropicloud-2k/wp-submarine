@@ -10,7 +10,7 @@ wps_setup() {
 		mkdir -p $home/logs/$d
 	done	
 
-	find $conf -type f | xargs sed -i "s|example.com|$HOSTNAME|g"
+	find $conf -type f | xargs sed -i "s|example.com|$WP_DOMAIN|g"
 
 	if [[  ! -f $home/.env  ]]; then wps_env; fi
 	if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then wps_mysql_install; fi

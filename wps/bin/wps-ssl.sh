@@ -6,15 +6,15 @@ wps_ssl() {
 
 	wps_header "Creating SSL cert."
 
-	if [[  ! -f $home/ssl/${HOSTNAME}.crt  ]]; then
+	if [[  ! -f $home/ssl/${WP_DOMAIN}.crt  ]]; then
 	
 		cd $conf/certs
 		
-		cat $conf/nginx/openssl.conf | sed -e "s/example.com/$HOSTNAME/g" > openssl.conf
+		cat $conf/nginx/openssl.conf | sed -e "s/example.com/$WP_DOMAIN/g" > openssl.conf
 	
-		openssl req -nodes -sha256 -newkey rsa:2048 -keyout $HOSTNAME.key -out $HOSTNAME.csr -config openssl.conf -batch
-		openssl rsa -in $HOSTNAME.key -out $HOSTNAME.key
-		openssl x509 -req -days 365 -sha256 -in $HOSTNAME.csr -signkey $HOSTNAME.key -out $HOSTNAME.crt	
+		openssl req -nodes -sha256 -newkey rsa:2048 -keyout $WP_DOMAIN.key -out $WP_DOMAIN.csr -config openssl.conf -batch
+		openssl rsa -in $WP_DOMAIN.key -out $WP_DOMAIN.key
+		openssl x509 -req -days 365 -sha256 -in $WP_DOMAIN.csr -signkey $WP_DOMAIN.key -out $WP_DOMAIN.crt	
 	
 		rm -f openssl.conf
 

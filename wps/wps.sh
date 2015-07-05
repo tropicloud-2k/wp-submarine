@@ -42,6 +42,13 @@ elif [[  $1 == 'login'  ]];     then wps_login $@
 elif [[  $1 == 'root'  ]];      then wps_root $@
 elif [[  $1 == 'adminer'  ]];   then wps_adminer $@
 
+# SHELL
+# ---------------------------------------------------------------------------------
+
+elif [[  $1 == '/bin/true'  ]]; then /bin/true
+elif [[  $1 == '/bin/bash'  ]]; then /bin/bash
+elif [[  $1 == '/bin/sh'  ]];   then /bin/sh $@
+
 # HELP
 # ---------------------------------------------------------------------------------
 
