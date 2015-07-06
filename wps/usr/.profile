@@ -17,3 +17,4 @@ for var in `cat $env`; do
 # 	esac
 	
 done
+export HOME="myhome"
