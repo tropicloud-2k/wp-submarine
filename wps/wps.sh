@@ -30,6 +30,7 @@ done
 # ---------------------------------------------------------------------------------
 
   if [[  $1 == 'build'  ]];     then wps_build $@
+  if [[  $1 == 'setup'  ]];     then wps_setup $@
 elif [[  $1 == 'start'  ]];     then wps_start $@
 elif [[  $1 == 'stop'  ]];      then wps_stop $@
 elif [[  $1 == 'restart'  ]];   then wps_restart $@
