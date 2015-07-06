@@ -67,10 +67,10 @@ wps_env() {
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
-	if [[  $WP_SSL == 'true'  ]];
+	  if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
-	fi
+	  fi
 	
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
 	export WPS_PASSWORD="`openssl rand 12 -hex`"

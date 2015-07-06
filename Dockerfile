@@ -9,4 +9,4 @@ ENV WP_ENV=development \
     WP_REPO=https://github.com/roots/bedrock.git
 
 EXPOSE 80 443
-CMD /usr/bin/wps start
+CMD ["/usr/bin/wps","start"]
