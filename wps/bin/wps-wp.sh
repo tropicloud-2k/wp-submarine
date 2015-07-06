@@ -4,19 +4,15 @@
 
 wps_wp_install() {
 		
-	export WPS_INSTALL"wordpress"
-
 	if [[  -n "$WP_USER"  ]] && [[  -n "$WP_MAIL"  ]] && [[  -n "$WP_PASS"  ]]; then
-	
-		if [[  $WPS_MYSQL == '127.0.0.1:3306'  ]]; then
+		if [[  $WP_SQL == 'local'  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
 			mysql_wait && wps_wp_core			
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
-		
-	else export WPS_INSTALL"completed"
 	fi
+	echo "installed" > $conf/submarine/.status
 }
 
 wps_wp_core() {
@@ -28,15 +24,13 @@ wps_wp_core() {
 	wp core install --url="$WP_HOME" --title="$WP_TITLE" --admin_name="$WP_USER" --admin_email="$WP_MAIL" --admin_password="$WP_PASS"
 	wp rewrite structure '/%postname%/'
 	wps_wp_plugins
-	
-	export WPS_INSTALL"completed"
 }
 
 wps_wp_wait() {
 
 
 	echo -ne "Loading environment..."
-	while [[ $WPS_INSTALL != 'completed'  ]]; do
+	while [[ ! -f $conf/submarine/.status  ]]; do
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 }

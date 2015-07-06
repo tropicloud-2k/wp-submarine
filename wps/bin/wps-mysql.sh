@@ -2,7 +2,7 @@
 # DB CREATE
 # ---------------------------------------------------------------------------------
 
-mysql_wait() {
+wps_mysql_wait() {
 
 	echo -ne "\nWaiting mysql server..."
 	while ! mysqladmin ping -s -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST > /dev/null 2>&1; do
@@ -12,7 +12,7 @@ mysql_wait() {
 
 wps_mysql_link() {
 
-	mysql_wait && export WPS_INSTALL"mysql"
+	wps_mysql_wait
 	
 	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -h $DB_HOST -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
@@ -22,7 +22,7 @@ wps_mysql_link() {
 
 wps_mysql_local() {
 	
-	mysql_wait && export WPS_INSTALL"mysql"
+	wps_mysql_wait
 	
 	mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
  	mysql -u root -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
