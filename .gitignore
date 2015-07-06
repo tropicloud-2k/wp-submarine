@@ -1,6 +1,7 @@
 # Text files #
 ###################
 *.txt
+docker.sh
 
 # Compiled source #
 ###################

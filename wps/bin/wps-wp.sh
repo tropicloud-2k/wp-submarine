@@ -19,7 +19,7 @@ wps_wp_core() {
 
 	cd $web
 	
-	WP_TITLE="Another awesome WP-Submarine site"
+	WP_TITLE="Just another WordPress submarine"
 	
 	wp core install --url="$WP_HOME" --title="$WP_TITLE" --admin_name="$WP_USER" --admin_email="$WP_MAIL" --admin_password="$WP_PASS"
 	wp rewrite structure '/%postname%/'
