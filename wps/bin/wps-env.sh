@@ -98,8 +98,5 @@ wps_env() {
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer
 
-	cat /wps/usr/.profile | sed "s|myhome|$home|g" > $home/.profile
-	cat /wps/usr/.profile | sed "s|myhome|/root|g" > /root/.profile
-
 	env | grep = >> $home/.env
 }

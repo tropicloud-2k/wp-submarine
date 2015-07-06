@@ -9,12 +9,10 @@ for var in `cat $env`; do
 	elif [[  $key == *'.'*  ]]; then /bin/true
 	else export "$key"="$val"
 	fi
-	
-# 	case $key in
-# 		*-*) /bin/false;;
-# 		*.*) /bin/false;;
-# 		*) export "$key"="$val";;
-# 	esac
-	
+
 done
-export HOME="myhome"
+
+if [[  `id -u` == 0  ]];
+then export HOME="/root"
+else export HOME="$home"
+fi

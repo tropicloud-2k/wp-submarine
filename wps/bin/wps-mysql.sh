@@ -4,7 +4,7 @@
 
 wps_mysql_wait() {
 
-	if [[  WP_SQL == 'local'  ]];
+	if [[  $WP_SQL == 'local'  ]];
 	then ARGS="-h $DB_HOST"
 	else ARGS="-h $DB_HOST -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD"
 	fi
