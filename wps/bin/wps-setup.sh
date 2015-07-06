@@ -7,7 +7,6 @@ wps_setup() {
 	cp -R /wps/usr/. $home
 	
 	find $conf -type f -exec sed -i "s|example.com|$WP_DOMAIN|g" {} \;
-	find $conf -type f -exec sed -i "s|WPS_PASSWORD|$WPS_PASSWORD|g" {} \;
 
 	wps_env
 	
@@ -15,6 +14,7 @@ wps_setup() {
 	if [[  $WP_SQL == 'local'  ]]; then wps_mysql; fi
 	
 	wps_chmod
+	
 	wps_header "Installing WordPress"
 	
 	su -l $user -c "git clone $WP_REPO $www" && wps_wp_version

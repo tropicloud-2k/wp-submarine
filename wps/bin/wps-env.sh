@@ -73,7 +73,6 @@ wps_env() {
 	  fi
 	
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
-	export WPS_PASSWORD="`openssl rand 12 -hex`"
 	export WP_SITEURL="${WP_HOME}/wp"
 	export VISUAL="nano"
 	
@@ -88,6 +87,8 @@ wps_env() {
 	
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
+
+	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 
 # DUMP
 # ---------------------------------------------------------------------------------
