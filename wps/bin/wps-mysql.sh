@@ -4,8 +4,13 @@
 
 wps_mysql_wait() {
 
+	if [[  WP_SQL == 'local'  ]];
+	then ARGS="-h $DB_HOST"
+	else ARGS="-h $DB_HOST -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD"
+	fi
+
 	echo -ne "\nWaiting mysql server..."
-	while ! mysqladmin ping -s -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD -h $DB_HOST > /dev/null 2>&1; do
+	while ! mysqladmin ping -s $ARGS > /dev/null 2>&1; do
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 }
