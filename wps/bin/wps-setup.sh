@@ -2,7 +2,7 @@
 wps_setup() {
 	
 	# SYSTEM
-	# ---------------------------------------------------------------------------------
+	# -----------------------------------------------------------------------------
 
 	find $conf -type f | xargs sed -i "s|example.com|$WP_DOMAIN|g"
 
@@ -13,7 +13,7 @@ wps_setup() {
 	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 	
 	# WORDPRESS
-	# ---------------------------------------------------------------------------------
+	# -----------------------------------------------------------------------------
 	
 	wps_header "Installing WordPress"
 	
@@ -23,4 +23,9 @@ wps_setup() {
 
 	wps_wp_install > $conf/submarine/wordpress.log 2>&1 &
 	wps_wp_wait			
+
+# ---------------------------------------------------------------------------------
+
+	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
+	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 }

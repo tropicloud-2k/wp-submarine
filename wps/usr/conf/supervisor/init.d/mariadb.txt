@@ -1,5 +1,5 @@
 [program:mariadb]
-command = /usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql --log-error=/home/wordpress/logs/mysql/error.log
+command = /usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql --log-error=/root/mysql.log
 autostart = true
 autorestart = true
 stdout_events_enabled = true

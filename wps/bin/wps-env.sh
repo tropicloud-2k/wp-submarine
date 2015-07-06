@@ -102,9 +102,4 @@ wps_env() {
 	echo -e "source $env\nexport HOME=/root" > /root/.profile
 	
 	env | grep = >> $home/.env
-
-# ---------------------------------------------------------------------------------
-
-	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
-	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
 }
