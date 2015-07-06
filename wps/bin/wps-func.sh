@@ -12,7 +12,7 @@ wps_check() {
 wps_check_true() {
 	if [[  -d $www  ]];
 	then /bin/true
-	else su -l root -c "wps setup"
+	else su -l root -c "`wps setup`"
 	fi
 }
 
