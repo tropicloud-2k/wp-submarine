@@ -8,11 +8,10 @@ wps_setup() {
 	
 	find $conf -type f -exec sed -i "s|example.com|$WP_DOMAIN|g" {} \;
 
-	if [[  ! -f $home/.env  ]]; then wps_env; fi
+	wps_env
+	
 	if [[  $WP_SSL == 'true'  ]]; then wps_ssl; fi
 	if [[  $WP_SQL == 'local'  ]]; then wps_mysql; fi
-
-	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 	
 	wps_chmod
 	
@@ -28,7 +27,8 @@ wps_setup() {
 	wps_wp_install > $conf/submarine/wordpress.log 2>&1 &
 	wps_wp_wait			
 
-	# fix "The mysql extension is deprecated and will be removed in the future: use mysqli or PDO"
+	# fix "The mysql extension is deprecated"
 	sed -i "s/define('WP_DEBUG'.*/define('WP_DEBUG', false);/g" $www/config/environments/development.php
+	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 }
 
