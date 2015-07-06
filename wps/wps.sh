@@ -30,7 +30,6 @@ done
 # ---------------------------------------------------------------------------------
 
   if [[  $1 == 'build'  ]];     then wps_build $@
-elif [[  $1 == 'setup'  ]];     then wps_setup $@
 elif [[  $1 == 'start'  ]];     then wps_start $@
 elif [[  $1 == 'stop'  ]];      then wps_stop $@
 elif [[  $1 == 'restart'  ]];   then wps_restart $@
@@ -42,6 +41,13 @@ elif [[  $1 == 'ps'  ]];        then wps_ps $@
 elif [[  $1 == 'login'  ]];     then wps_login $@
 elif [[  $1 == 'root'  ]];      then wps_root $@
 elif [[  $1 == 'adminer'  ]];   then wps_adminer $@
+
+# SHELL
+# ---------------------------------------------------------------------------------
+
+elif [[  $1 == 'true'  ]]; then /bin/true
+elif [[  $1 == 'bash'  ]]; then /bin/bash
+elif [[  $1 == '/bin/sh'  ]]; then /bin/sh -c `echo $@ | sed 's|wps sh ||g'`
 
 # HELP
 # ---------------------------------------------------------------------------------
