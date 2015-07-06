@@ -1,4 +1,17 @@
 
+# WP VERSION
+# ---------------------------------------------------------------------------------
+
+wps_wp_version(){
+
+	LOCK_VERSION=`cat $www/composer.json | grep 'johnpbloch/wordpress' | cut -d: -f2`
+	
+	if [[  ! -z $WP_VERSION  ]]; then
+		sed -i "s/$LOCK_VERSION/\"$WP_VERSION\"/g" $www/composer.json
+		su -l $user -c "cd $www && composer update"
+	fi
+}
+
 # WP INSTALL
 # ---------------------------------------------------------------------------------
 
@@ -26,15 +39,16 @@ wps_wp_core() {
 	wps_wp_plugins
 }
 
-wps_wp_wait() {
+# WP WAIT
+# ---------------------------------------------------------------------------------
 
+wps_wp_wait() {
 
 	echo -ne "Loading environment..."
 	while [[ ! -f $home/.submarine  ]]; do
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 }
-
 
 # WP PLUGINS
 # ---------------------------------------------------------------------------------
@@ -61,4 +75,3 @@ wps_wp_plugins() {
 		echo "define('WP_REDIS_PORT', getenv('WP_REDIS_PORT'));" >> $www/config/environments/production.php
 	fi
 }
-

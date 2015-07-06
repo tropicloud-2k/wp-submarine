@@ -24,7 +24,6 @@ wps_check_false() {
 	exit 1;
 }
 
-
 # HEADER
 # ---------------------------------------------------------------------------------
 
@@ -35,7 +34,6 @@ wps_header() {
 -----------------------------------------------------
 \033[0m"
 }
-
 
 # LINKS
 # ---------------------------------------------------------------------------------
@@ -57,20 +55,6 @@ wps_links() {
 	else echo -e "\033[1;31m  •\033[0;37m Memcached\033[0m [not connected]"
 	fi
 }
-
-
-# VERSION
-# ---------------------------------------------------------------------------------
-
-wps_version(){
-
-	LOCK_VERSION=`cat $www/composer.json | grep 'johnpbloch/wordpress' | cut -d: -f2`
-	
-	if [[  ! -z $WP_VERSION  ]];
-	then sed -i "s/$LOCK_VERSION/\"$WP_VERSION\"/g" $www/composer.json && su -l $user -c "cd $www && composer update"
-	fi
-}
-
 
 # CHMOD
 # ---------------------------------------------------------------------------------

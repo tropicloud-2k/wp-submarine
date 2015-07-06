@@ -8,7 +8,7 @@ wps_ssl() {
 
 	if [[  ! -f $home/ssl/${WP_DOMAIN}.crt  ]]; then
 	
-		cd $conf/certs
+		cd $conf/ssl
 		
 		cat $conf/nginx/openssl.conf | sed -e "s/example.com/$WP_DOMAIN/g" > openssl.conf
 	

@@ -59,14 +59,11 @@ wps_build() {
 	adduser -D -G nginx -s /bin/sh -u 1000 -h $home $user
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 
-	cp -R /wps/usr/* $home
-	mkdir -p $conf/submarine
-
 	ln -s /wps/wps.sh /usr/local/bin/wps
 	chmod +x /usr/local/bin/wps
 
 	# MSMTP
-	ln -s $conf/smtp/msmtprc /etc/msmtprc
+	cat /wps/usr/.msmtprc > /etc/msmtprc
 	echo "sendmail_path = /usr/bin/msmtp -t" > /etc/php/conf.d/sendmail.ini
 	
 	wps_header "Done!"
