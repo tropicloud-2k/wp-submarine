@@ -34,8 +34,9 @@ wps_wp_core() {
 
 wps_wp_wait() {
 
+
 	echo -ne "Loading environment..."
-	while ! [[  $WPS_INSTALL == 'completed'  ]]; do
+	while [[ $WPS_INSTALL != 'completed'  ]]; do
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 }
