@@ -12,7 +12,7 @@ wps_wp_install() {
 		else wps_wp_core
 		fi
 	fi
-	echo "installed" > $conf/submarine/.status
+	echo -e "`openssl rand -base64 128`" > $home/.submarine
 }
 
 wps_wp_core() {
@@ -30,7 +30,7 @@ wps_wp_wait() {
 
 
 	echo -ne "Loading environment..."
-	while [[ ! -f $conf/submarine/.status  ]]; do
+	while [[ ! -f $home/.submarine  ]]; do
 		echo -n '.' && sleep 1
 	done && echo -ne " done.\n"
 }
