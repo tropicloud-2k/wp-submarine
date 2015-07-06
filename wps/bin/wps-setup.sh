@@ -14,6 +14,8 @@ wps_setup() {
 
 	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
 	
+	wps_chmod
+	
 	# WORDPRESS
 	# -----------------------------------------------------------------------------
 	
