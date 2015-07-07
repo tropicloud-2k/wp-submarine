@@ -17,7 +17,7 @@ wps_wp_version(){
 
 wps_wp_install() {
 		
-	if [[  -f $conf/submarine/wp.login  ]]; then
+	if [[  $WP_INSTALL == 'true'  ]]; then
 		if [[  $WP_SQL == 'local'  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
 			

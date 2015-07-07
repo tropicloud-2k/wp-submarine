@@ -66,13 +66,19 @@ wps_env() {
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
+	  if [[  -n $WP_USER ]] && [[  -n $WP_PASS  ]] && [[  -n $WP_MAIL  ]];
+	then export WP_INSTALL="true"
+	  fi
+	  
 	  if [[  $WP_SSL == 'true'  ]];
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
 	  fi
-  
+	  
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
+	export WPS_PASS="`openssl rand 12 -hex`"
 	export WP_SITEURL="${WP_HOME}/wp"
+	export WP_TITLE="$WP_DOMAIN"
 	export VISUAL="nano"
 	export HOME="$home"
 	
@@ -88,20 +94,10 @@ wps_env() {
 # 	export WPM_ENV_HTTP_SHA1="`echo -ne "$WPS_PASSWORD" | sha1sum | awk '{print $1}'`"
 # 	echo -e "$user:`openssl passwd -crypt $WPS_PASSWORD`\n" > $home/.htpasswd
 
-	sed -i "s/WPS_PASSWORD/$WPS_PASSWORD/g" $conf/supervisor/supervisord.conf
+	sed -i "s/WPS_PASS/$WPS_PASS/g" $conf/supervisor/supervisord.conf
 
 # DUMP
 # ---------------------------------------------------------------------------------
-	
-	if [[  -n $WP_USER ]] && [[  -n $WP_PASS  ]] && [[  -n $WP_MAIL  ]];
-	then echo "WP_USER=$WP_USER" >> $conf/submarine/wp.login; unset $WP_USER
-		 echo "WP_PASS=$WP_PASS" >> $conf/submarine/wp.login; unset $WP_PASS
-		 echo "WP_MAIL=$WP_MAIL" >> $conf/submarine/wp.login; unset $WP_MAIL
-	fi
-	if [[  -n $WP_TITLE  ]];
-	then echo "WP_TITLE=$WP_TITLE" >> $conf/submarine/wp.login; unset $WP_TITLE
-	else echo "WP_TITLE=$WP_DOMAIN" >> $conf/submarine/wp.login
-	fi
 	
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
