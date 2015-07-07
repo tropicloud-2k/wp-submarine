@@ -45,9 +45,9 @@ elif [[  $1 == 'adminer'  ]];   then wps_adminer $@
 # SHELL
 # ---------------------------------------------------------------------------------
 
-elif [[  $1 == 'true'  ]]; then /bin/true
-elif [[  $1 == 'bash'  ]]; then /bin/bash
-elif [[  $1 == '/bin/sh'  ]]; then /bin/sh -c `echo $@ | sed 's|wps sh ||g'`
+elif [[  $1 == 'true'  ]];      then /bin/true
+elif [[  $1 == 'bash'  ]];      then /bin/bash
+elif [[  $1 == '/bin/sh'  ]];   then /bin/sh -c `echo $@ | sed 's|wps sh ||g'`
 
 # HELP
 # ---------------------------------------------------------------------------------
