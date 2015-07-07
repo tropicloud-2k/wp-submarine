@@ -93,10 +93,15 @@ wps_env() {
 # DUMP
 # ---------------------------------------------------------------------------------
 	
-	if [[  -n $WP_USER   ]]; then echo "WP_USER=$WP_USER"  >> $conf/submarine/wp.login && unset $WP_USER; fi
-	if [[  -n $WP_PASS   ]]; then echo "WP_USER=$WP_PASS"  >> $conf/submarine/wp.login && unset $WP_PASS; fi
-	if [[  -n $WP_MAIL   ]]; then echo "WP_USER=$WP_MAIL"  >> $conf/submarine/wp.login && unset $WP_MAIL; fi
-	if [[  -n $WP_TITLE  ]]; then echo "WP_USER=$WP_TITLE" >> $conf/submarine/wp.login && unset $WP_TITLE; fi
+	if [[  -n $WP_USER ]] && [[  -n $WP_PASS  ]] && [[  -n $WP_MAIL  ]];
+	then echo "WP_USER=$WP_USER" >> $conf/submarine/wp.login; unset $WP_USER
+		 echo "WP_PASS=$WP_PASS" >> $conf/submarine/wp.login; unset $WP_PASS
+		 echo "WP_MAIL=$WP_MAIL" >> $conf/submarine/wp.login; unset $WP_MAIL
+	fi
+	if [[  -n $WP_TITLE  ]];
+	then echo "WP_TITLE=$WP_TITLE" >> $conf/submarine/wp.login; unset $WP_TITLE
+	else echo "WP_TITLE=$WP_DOMAIN" >> $conf/submarine/wp.login
+	fi
 	
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
