@@ -66,7 +66,7 @@ wps_env() {
 # WORDPRESS
 # ---------------------------------------------------------------------------------
 
-	  if [[  -n $WP_USER ]] && [[  -n $WP_PASS  ]] && [[  -n $WP_MAIL  ]];
+	  if [[  ! -z $WP_USER ]] && [[  ! -z $WP_PASS  ]] && [[  ! -z $WP_MAIL  ]];
 	then export WP_INSTALL="true"
 	  fi
 	  
