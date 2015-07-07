@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # WP-SUBMARINE
 # ---------------------------------------------------------------------------------
@@ -41,13 +41,6 @@ elif [[  $1 == 'ps'  ]];        then wps_ps $@
 elif [[  $1 == 'login'  ]];     then wps_login $@
 elif [[  $1 == 'root'  ]];      then wps_root $@
 elif [[  $1 == 'adminer'  ]];   then wps_adminer $@
-
-# SHELL
-# ---------------------------------------------------------------------------------
-
-elif [[  $1 == 'true'  ]];      then /bin/true
-elif [[  $1 == 'bash'  ]];      then /bin/bash
-elif [[  $1 == '/bin/sh'  ]];   then /bin/sh -c `echo $@ | sed 's|wps sh ||g'`
 
 # HELP
 # ---------------------------------------------------------------------------------
