@@ -6,7 +6,7 @@ wps_ssl() {
 
 	wps_header "Creating SSL cert."
 
-	if [[  ! -f $home/ssl/${WP_DOMAIN}.crt  ]]; then
+	if [[  ! -f $conf/ssl/${WP_DOMAIN}.crt  ]]; then
 	
 		cd $conf/ssl
 		
