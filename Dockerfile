@@ -10,4 +10,4 @@ ENV WP_ENV=development \
 
 EXPOSE 80 443
 ENTRYPOINT ["/bin/sh"]
-CMD ["wps","start"]
+CMD ["/usr/bin/wps","start"]
