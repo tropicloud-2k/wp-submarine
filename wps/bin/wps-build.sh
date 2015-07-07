@@ -60,6 +60,8 @@ wps_build() {
 	echo "$user ALL = NOPASSWD : ALL" >> /etc/sudoers
 
 	cat /wps/usr/.profile > /root/.profile
+	echo "export HOME=/root" >> /root/.profile	
+	
 	ln -s /wps/wps.sh /usr/bin/wps
 	chmod +x /usr/bin/wps
 

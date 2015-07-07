@@ -17,7 +17,7 @@ wps_wp_version(){
 
 wps_wp_install() {
 		
-	if [[  ! -z "$WP_USER" && ! -z "$WP_MAIL" && ! -z "$WP_PASS"  ]]; then
+	if [[  -n "$WP_USER"  ]] && [[  -n "$WP_MAIL"  ]] && [[  -n "$WP_PASS"  ]]; then
 		if [[  $WP_SQL == 'local'  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
 			mysql_wait && wps_wp_core			

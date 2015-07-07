@@ -75,6 +75,7 @@ wps_env() {
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
 	export WP_SITEURL="${WP_HOME}/wp"
 	export VISUAL="nano"
+	export HOME="$home"
 	
 	export AUTH_KEY="`openssl rand 48 -base64`"
 	export SECURE_AUTH_KEY="`openssl rand 48 -base64`"
