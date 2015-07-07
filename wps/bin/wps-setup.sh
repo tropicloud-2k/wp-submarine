@@ -14,7 +14,6 @@ wps_setup() {
 	if [[  $WP_SQL == 'local'  ]]; then wps_mysql; fi
 	
 	wps_chmod
-	
 	wps_header "Installing WordPress"
 	
 	su -l $user -c "git clone $WP_REPO $www" && wps_wp_version

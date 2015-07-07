@@ -33,7 +33,6 @@ wps_env() {
 			export DB_NAME="`echo ${WP_DOMAIN//./_} | cut -c 1-16`"
 			export DB_PASSWORD="`openssl rand -hex 12`"
 			export DB_PREFIX="`openssl rand -hex 3`_"
-			export MYSQL_ENV_MYSQL_ROOT_PASSWORD=""
 			export WP_SQL="local"
 		
 		elif [[  -n $MYSQL_PORT  ]]; then 
@@ -71,7 +70,7 @@ wps_env() {
 	then export WP_HOME="https://${WP_DOMAIN}"
 	else export WP_HOME="http://${WP_DOMAIN}"
 	  fi
-	
+  
 	export WPS_CTL="$conf/supervisor/supervisord.conf"
 	export WP_SITEURL="${WP_HOME}/wp"
 	export VISUAL="nano"
@@ -94,8 +93,11 @@ wps_env() {
 # DUMP
 # ---------------------------------------------------------------------------------
 	
-	unset WP_TITLE
-
+	if [[  -n $WP_USER   ]]; then echo "WP_USER=$WP_USER"  >> $conf/submarine/wp.login && unset $WP_USER; fi
+	if [[  -n $WP_PASS   ]]; then echo "WP_USER=$WP_PASS"  >> $conf/submarine/wp.login && unset $WP_PASS; fi
+	if [[  -n $WP_MAIL   ]]; then echo "WP_USER=$WP_MAIL"  >> $conf/submarine/wp.login && unset $WP_MAIL; fi
+	if [[  -n $WP_TITLE  ]]; then echo "WP_USER=$WP_TITLE" >> $conf/submarine/wp.login && unset $WP_TITLE; fi
+	
 	echo -e "set \$DB_HOST $DB_HOST;" >> $home/.adminer
 	echo -e "set \$DB_NAME $DB_NAME;" >> $home/.adminer
 	echo -e "set \$DB_USER $DB_USER;" >> $home/.adminer

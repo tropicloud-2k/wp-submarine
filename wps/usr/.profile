@@ -11,8 +11,3 @@ for var in `cat $env`; do
 	fi
 
 done
-
-if [[  `id -u` == 0  ]];
-then export HOME="/root"
-else export HOME="$home"
-fi
