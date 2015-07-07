@@ -4,15 +4,8 @@
 
 wps_mysql_wait() {
 
-	if [[  $WP_SQL == 'local'  ]]; then 
-	
-		ARGS="-h $DB_HOST"
-		
-		echo -ne "Starting mysql server..."
-		while [[  ! -e /run/mysqld/mysqld.sock  ]]; do
-			echo -n '.' && sleep 1;
-		done && echo -ne " done.\n"
-		
+	if [[  $WP_SQL == 'local'  ]];
+	then ARGS="-h $DB_HOST"
 	else ARGS="-h $DB_HOST -u root -p$MYSQL_ENV_MYSQL_ROOT_PASSWORD"
 	fi
 
@@ -21,7 +14,6 @@ wps_mysql_wait() {
 		echo -n '.' && sleep 1; 
 	done && echo -ne " done.\n"
 }
-
 
 wps_mysql_link() {
 

@@ -20,7 +20,10 @@ wps_wp_install() {
 	if [[  -f $conf/submarine/wp.login  ]]; then
 		if [[  $WP_SQL == 'local'  ]]; then
 			mysqld_safe > /dev/null 2>&1 &
-			mysql_wait && wps_wp_core			
+			
+			wps_mysql_wait
+			wps_wp_core			
+			
 			mysqladmin -u root shutdown
 		else wps_wp_core
 		fi
